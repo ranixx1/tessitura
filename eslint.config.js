@@ -11,8 +11,11 @@ export default [
       parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: 2022,
-        sourceType: 'module',
-        project: './tsconfig.app.json'
+        sourceType: 'module'
+      },
+      globals: {
+        console: 'readonly',
+        process: 'readonly'
       }
     },
     plugins: {
@@ -28,14 +31,7 @@ export default [
           varsIgnorePattern: '^_'
         }
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/explicit-function-return-type': [
-        'warn',
-        {
-          allowExpressions: true,
-          allowTypedFunctionExpressions: true
-        }
-      ]
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   }
 ];
