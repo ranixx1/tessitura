@@ -1,0 +1,36 @@
+@use "../../styles/tokens" as *;
+
+.alert {
+  width: 100%;
+  padding: $spacing-3 $spacing-4;
+
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+
+  &--success {
+    color: $color-success;
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  &--error {
+    color: $color-danger;
+    background-color: #fef2f2;
+    border-color: #fecaca;
+  }
+
+  &--warning {
+    color: $color-warning;
+    background-color: #fffbeb;
+    border-color: #fde68a;
+  }
+
+  &--info {
+    color: $color-info;
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+  }
+}
