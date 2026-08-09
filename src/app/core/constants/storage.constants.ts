@@ -1,3 +1,3 @@
 export const STORAGE_KEYS = {
-  TOKEN: 'token'
+  TOKEN: 'token',
 } as const;
