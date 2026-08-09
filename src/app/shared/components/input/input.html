@@ -1,0 +1,26 @@
+<div class="input-field">
+
+  @if (label) {
+    <label [for]="id">
+      {{ label }}
+
+      @if (required) {
+        <span class="input-field__required">*</span>
+      }
+    </label>
+  }
+
+  <input
+    [id]="id"
+    [name]="name"
+    [type]="type"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [required]="required"
+    [autocomplete]="autocomplete"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+
+</div>

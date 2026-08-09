@@ -1,0 +1,58 @@
+@use "../../styles/tokens" as *;
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+  }
+
+  &__required {
+    margin-left: 2px;
+    color: $color-danger;
+  }
+
+  input {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 0 $spacing-3;
+
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-md;
+
+    background-color: $color-white;
+    color: $color-text-primary;
+
+    font-size: $font-size-sm;
+
+    transition:
+      border-color $transition-fast,
+      box-shadow $transition-fast,
+      background-color $transition-fast;
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: $color-gray-400;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
+    }
+
+    &:disabled {
+      background-color: $color-gray-100;
+      color: $color-gray-500;
+      cursor: not-allowed;
+    }
+  }
+}
