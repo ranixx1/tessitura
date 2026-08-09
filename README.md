@@ -134,29 +134,29 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Global Styles
 
-* [ ] Define design tokens
-* [ ] Define color palette
-* [ ] Define typography
-* [ ] Define spacing system
-* [ ] Define border radius
-* [ ] Define shadows
+* [x] Define design tokens
+* [x] Define color palette
+* [x] Define typography
+* [x] Define spacing system
+* [x] Define border radius
+* [x] Define shadows
 * [ ] Define breakpoints
 * [ ] Define SCSS mixins
 
 ### Components
 
-* [ ] Button
-* [ ] Input
+* [x] Button
+* [x] Input
 * [ ] Password Input
 * [ ] Select
 * [ ] Checkbox
 * [ ] Radio
-* [ ] Card
+* [x] Card
 * [ ] Badge
 * [ ] Avatar
-* [ ] Alert
+* [x] Alert
 * [ ] Spinner
-* [ ] Loading
+* [x] Loading
 * [ ] Modal
 * [ ] Dialog
 * [ ] Toast
@@ -196,7 +196,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Login
 
-* [ ] Build Login page
+* [x] Build Login page
 * [ ] Reactive Forms
 * [ ] Username validation
 * [ ] Password validation
