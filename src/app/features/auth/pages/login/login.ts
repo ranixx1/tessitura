@@ -19,10 +19,10 @@ import { AlertComponent } from '../../../../shared/components/alert/alert';
     ButtonComponent,
     InputComponent,
     CardComponent,
-    AlertComponent
+    AlertComponent,
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrl: './login.scss',
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -33,11 +33,11 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private jwtService: JwtService,
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       login: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -55,7 +55,7 @@ export class LoginComponent {
       error: () => {
         this.loading = false;
         this.errorMessage = 'Invalid username or password';
-      }
+      },
     });
   }
 }

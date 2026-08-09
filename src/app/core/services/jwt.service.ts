@@ -11,13 +11,10 @@ interface JwtPayload {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JwtService {
-
-  constructor(
-    private readonly storage: StorageService
-  ) {}
+  constructor(private readonly storage: StorageService) {}
 
   setToken(token: string): void {
     this.storage.set(STORAGE_KEYS.TOKEN, token);
@@ -85,9 +82,7 @@ export class JwtService {
         return null;
       }
 
-      const normalized = payload
-        .replace(/-/g, '+')
-        .replace(/_/g, '/');
+      const normalized = payload.replace(/-/g, '+').replace(/_/g, '/');
 
       return JSON.parse(atob(normalized)) as JwtPayload;
     } catch {
