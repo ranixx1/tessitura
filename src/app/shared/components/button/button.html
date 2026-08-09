@@ -1,0 +1,20 @@
+<button
+  [type]="type"
+  [disabled]="disabled || loading"
+  class="button"
+  [class.button--primary]="variant === 'primary'"
+  [class.button--secondary]="variant === 'secondary'"
+  [class.button--danger]="variant === 'danger'"
+  [class.button--ghost]="variant === 'ghost'"
+  [class.button--sm]="size === 'sm'"
+  [class.button--md]="size === 'md'"
+  [class.button--lg]="size === 'lg'"
+>
+  @if (loading) {
+    <span class="button__spinner"></span>
+  }
+
+  <span>
+    <ng-content></ng-content>
+  </span>
+</button>
