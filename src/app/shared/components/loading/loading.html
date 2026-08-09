@@ -1,0 +1,18 @@
+<div
+  class="loading"
+  [class.loading--small]="size === 'small'"
+  [class.loading--medium]="size === 'medium'"
+  [class.loading--large]="size === 'large'"
+  role="status"
+  aria-live="polite"
+>
+
+  <span class="loading__spinner"></span>
+
+  @if (message) {
+    <span class="loading__message">
+      {{ message }}
+    </span>
+  }
+
+</div>
