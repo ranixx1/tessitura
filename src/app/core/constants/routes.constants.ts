@@ -3,14 +3,14 @@ export const APP_ROUTES = {
     LOGIN: 'login',
     REGISTER: 'register',
     FORGOT_PASSWORD: 'forgot-password',
-    RESET_PASSWORD: 'reset-password'
+    RESET_PASSWORD: 'reset-password',
   },
 
   PORTAL: {
     ROOT: 'portal',
     DASHBOARD: 'dashboard',
     PROFILE: 'profile',
-    SETTINGS: 'settings'
+    SETTINGS: 'settings',
   },
 
   ADMIN: {
@@ -18,18 +18,18 @@ export const APP_ROUTES = {
     DASHBOARD: 'dashboard',
     USERS: 'users',
     ROLES: 'roles',
-    PERMISSIONS: 'permissions'
+    PERMISSIONS: 'permissions',
   },
 
   HELPDESK: {
-    ROOT: 'helpdesk'
+    ROOT: 'helpdesk',
   },
 
   KYC: {
-    ROOT: 'kyc'
+    ROOT: 'kyc',
   },
 
   ANALYTICS: {
-    ROOT: 'analytics'
-  }
+    ROOT: 'analytics',
+  },
 } as const;
