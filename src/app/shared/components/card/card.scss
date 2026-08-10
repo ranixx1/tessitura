@@ -1,0 +1,14 @@
+@use "../../styles/tokens" as *;
+
+.card {
+  width: 100%;
+
+  padding: $spacing-8;
+
+  background-color: $color-surface;
+
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  box-shadow: $shadow-md;
+}
