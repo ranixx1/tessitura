@@ -1,12 +1,22 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../../features/auth/service/auth.service';
+
+import { AuthService } from '../../services/auth.service';
 import { JwtService } from '../../../../core/services/jwt.service';
+
+import { LoginRequest } from '../../models/login-request';
+
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { InputComponent } from '../../../../shared/components/input/input';
 import { CardComponent } from '../../../../shared/components/card/card';
+import { LoadingComponent } from '../../../../shared/components/loading/loading';
 import { AlertComponent } from '../../../../shared/components/alert/alert';
 
 @Component({
@@ -19,6 +29,7 @@ import { AlertComponent } from '../../../../shared/components/alert/alert';
     ButtonComponent,
     InputComponent,
     CardComponent,
+    LoadingComponent,
     AlertComponent,
   ],
   templateUrl: './login.html',
@@ -30,10 +41,10 @@ export class LoginComponent {
   loading = false;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private jwtService: JwtService,
-    private router: Router,
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+    private readonly router: Router,
   ) {
     this.loginForm = this.fb.group({
       login: ['', [Validators.required]],
@@ -42,19 +53,34 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid || this.loading) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.login(this.loginForm.value).subscribe({
+    const credentials: LoginRequest = this.loginForm.getRawValue();
+
+    this.authService.login(credentials).subscribe({
       next: (response) => {
         this.jwtService.setToken(response.token);
-        this.router.navigate(['/home']);
-      },
-      error: () => {
         this.loading = false;
-        this.errorMessage = 'Invalid username or password';
+
+        this.router.navigate(['/portal']);
+      },
+
+      error: (error) => {
+        this.loading = false;
+
+        if (error.status === 401) {
+          this.errorMessage = 'Usuário ou senha inválidos.';
+          return;
+        }
+
+        this.errorMessage =
+          'Não foi possível realizar o login. Tente novamente.';
       },
     });
   }
