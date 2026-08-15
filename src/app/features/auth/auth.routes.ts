@@ -8,4 +8,12 @@ export const AUTH_ROUTES: Routes = [
         (m) => m.LoginComponent,
       ),
   },
+
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/register/register').then(
+        (m) => m.RegisterComponent,
+      ),
+  },
 ];
