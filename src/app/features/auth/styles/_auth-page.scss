@@ -1,0 +1,47 @@
+@use '../../../shared/styles/tokens' as *;
+
+%auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-8;
+  background:
+    radial-gradient(circle at 15% 20%, $color-primary-light 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, $color-primary-light 0%, transparent 40%),
+    $color-background;
+}
+
+%auth-card {
+  width: 100%;
+  max-width: 440px;
+  box-shadow: $shadow-lg;
+}
+
+%auth-header {
+  margin-bottom: $spacing-6;
+
+  h1 {
+    margin: 0 0 $spacing-2;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+%auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+%auth-link {
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
