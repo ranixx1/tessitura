@@ -36,4 +36,14 @@ form {
   span {
     margin-right: 0.35rem;
   }
+
+  a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
