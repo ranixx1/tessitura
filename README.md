@@ -114,17 +114,17 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 * [x] Create authentication guard
 * [x] Create role guard
-* [ ] Define complete role-based authorization strategy
+* [x] Define complete role-based authorization strategy
 
 ### Routing
 
 * [x] Configure feature-based routing
 * [x] Configure lazy-loaded feature routes
 * [x] Configure authentication route
-* [ ] Configure protected feature routes
-* [ ] Configure role-based routes
+* [x] Configure protected feature routes
+* [x] Configure role-based routes
 
-**Status:** 🟢 In progress
+**Status:** 🟢 Done
 
 ---
 
@@ -141,7 +141,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [x] Define border radius
 * [x] Define shadows
 * [ ] Define breakpoints
-* [ ] Define SCSS mixins
+* [x] Define SCSS mixins
 
 ### Components
 
@@ -186,11 +186,11 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Services
 
-* [ ] Refactor `AuthService`
-* [ ] Login
-* [ ] Register
-* [ ] Forgot password
-* [ ] Reset password
+* [x] Refactor `AuthService`
+* [x] Login
+* [x] Register
+* [x] Forgot password
+* [x] Reset password
 * [ ] Logout
 * [ ] Session management
 
@@ -198,40 +198,40 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 * [x] Build Login page
 * [ ] Reactive Forms
-* [ ] Username validation
-* [ ] Password validation
+* [x] Username validation
+* [x] Password validation
 * [ ] Loading state
 * [ ] Error state
 * [ ] JWT storage
-* [ ] Redirect after authentication
+* [x] Redirect after authentication
 
 ### Register
 
-* [ ] Build Register page
+* [x] Build Register page
 * [ ] Reactive Forms
 * [ ] Field validation
-* [ ] Password validation
+* [x] Password validation
 * [ ] Loading state
 * [ ] Error handling
-* [ ] Successful registration flow
+* [x] Successful registration flow
 
 ### Password Recovery
 
-* [ ] Forgot password page
-* [ ] Reset password page
-* [ ] Token handling
-* [ ] Success feedback
-* [ ] Error handling
+* [x] Forgot password page
+* [x] Reset password page
+* [x] Token handling
+* [x] Success feedback
+* [x] Error handling
 
 ### Authentication Flow
 
-* [ ] Protect private routes
+* [x] Protect private routes
 * [ ] Redirect unauthenticated users
 * [ ] Handle expired JWT
 * [ ] Handle unauthorized requests
 * [ ] Implement logout
 
-**Status:** 🟡 Partially started
+**Status:** 🟡 started
 
 ---
 
