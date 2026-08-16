@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+
 import { StorageService } from './storage.service';
 import { STORAGE_KEYS } from '../constants/storage.constants';
+import { Role } from '../constants/roles.constants';
 
 interface JwtPayload {
   sub?: string;
+  userId?: number;
   email?: string;
-  role?: string;
+  role?: Role;
   iat?: number;
   exp?: number;
 }
@@ -14,7 +17,7 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class JwtService {
-  constructor(private readonly storage: StorageService) {}
+  constructor(private readonly storage: StorageService) { }
 
   setToken(token: string): void {
     this.storage.set(STORAGE_KEYS.TOKEN, token);
@@ -62,7 +65,10 @@ export class JwtService {
     return this.decode(token);
   }
 
-  getRole(): string | null {
+  getUserId(): number | null {
+    return this.getPayload()?.userId ?? null;
+  }
+  getRole(): Role | null {
     return this.getPayload()?.role ?? null;
   }
 

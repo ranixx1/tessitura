@@ -1,4 +1,4 @@
-.login-page {
+.register-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -6,12 +6,12 @@
   padding: 2rem;
 }
 
-.login-card {
+.register-card {
   width: 100%;
   max-width: 520px;
 }
 
-.login-header {
+.register-header {
   margin-bottom: 1.5rem;
 
   h1 {
@@ -29,28 +29,7 @@ form {
   gap: 1rem;
 }
 
-.login-options {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -0.25rem;
-
-  a {
-    color: #4f46e5;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.login-error {
-  margin-bottom: 1rem;
-}
-
-.register-link {
+.login-link {
   margin-top: 1.5rem;
   text-align: center;
 

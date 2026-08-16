@@ -1,0 +1,124 @@
+<section class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <h1>Olá!</h1>
+      <p>
+        Acompanhe seus chamados e solicitações.
+      </p>
+    </div>
+
+    <a
+      routerLink="/portal/chamados/novo"
+      class="new-ticket-button"
+    >
+      Novo chamado
+    </a>
+  </header>
+
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <section class="stats">
+    <article class="stat-card">
+      <span class="stat-label">
+        Abertos
+      </span>
+
+      <strong>
+        {{ chamadosAbertos }}
+      </strong>
+    </article>
+
+    <article class="stat-card">
+      <span class="stat-label">
+        Pendentes
+      </span>
+
+      <strong>
+        {{ chamadosPendentes }}
+      </strong>
+    </article>
+
+    <article class="stat-card">
+      <span class="stat-label">
+        Fechados
+      </span>
+
+      <strong>
+        {{ chamadosFechados }}
+      </strong>
+    </article>
+  </section>
+
+  <section class="tickets">
+    <div class="section-header">
+      <div>
+        <h2>Meus chamados</h2>
+        <p>
+          Chamados criados por você.
+        </p>
+      </div>
+
+      <a routerLink="/portal/chamados">
+        Ver todos
+      </a>
+    </div>
+
+    @if (loading) {
+      <div class="loading">
+        Carregando chamados...
+      </div>
+    } @else if (chamados.length === 0) {
+      <div class="empty-state">
+        <h3>Nenhum chamado encontrado</h3>
+
+        <p>
+          Você ainda não abriu nenhum chamado.
+        </p>
+
+        <a
+          routerLink="/portal/chamados/novo"
+          class="new-ticket-button"
+        >
+          Abrir chamado
+        </a>
+      </div>
+    } @else {
+      <div class="ticket-list">
+        @for (chamado of chamados; track chamado.id) {
+          <a
+            class="ticket"
+            [routerLink]="['/portal/chamados', chamado.id]"
+          >
+            <div class="ticket-main">
+              <span class="ticket-code">
+                {{ chamado.codigo }}
+              </span>
+
+              <h3>
+                {{ chamado.titulo }}
+              </h3>
+
+              <p>
+                {{ chamado.descricao }}
+              </p>
+            </div>
+
+            <div class="ticket-meta">
+              <span>
+                {{ chamado.status }}
+              </span>
+
+              <span>
+                {{ chamado.prioridade }}
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    }
+  </section>
+</section>

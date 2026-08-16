@@ -1,41 +1,56 @@
 <div class="login-page">
-  <app-card>
-    <h1>Sign In</h1>
+  <app-card class="login-card">
+    <div class="login-header">
+      <h1>Bem-vindo ao Tessitura</h1>
+      <p>Entre na sua conta para continuar.</p>
+    </div>
+
+    @if (errorMessage) {
+      <app-alert
+        type="error"
+        [message]="errorMessage"
+      />
+    }
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <app-input
-        id="login"
-        name="login"
-        label="Username"
-        placeholder="Username"
+        label="Username ou e-mail"
+        type="text"
         formControlName="login"
-        autocomplete="username"
-        [required]="true"
+        placeholder="Digite seu username ou e-mail"
       />
 
       <app-input
-        id="password"
-        name="password"
-        label="Password"
+        label="Senha"
         type="password"
-        placeholder="Password"
         formControlName="password"
-        autocomplete="current-password"
-        [required]="true"
+        placeholder="Digite sua senha"
       />
 
-      <div class="forgot-password">
-        <a routerLink="/forgot-password">Forgot your password?</a>
+      <div class="login-options">
+        <a routerLink="/forgot-password">
+          Esqueci minha senha
+        </a>
       </div>
 
-      <app-alert type="error" [message]="errorMessage" />
-
-      <app-button type="submit" [loading]="loading"> Sign In </app-button>
+      <app-button
+        type="submit"
+        [disabled]="loginForm.invalid || loading"
+      >
+        @if (loading) {
+          <app-loading />
+        } @else {
+          Entrar
+        }
+      </app-button>
     </form>
-  </app-card>
 
-  <div class="footer">
-    <span>Don't have an account?</span>
-    <a routerLink="/register">Create one</a>
-  </div>
+    <div class="register-link">
+      <span>Ainda não possui uma conta?</span>
+
+      <a routerLink="/register">
+        Criar conta
+      </a>
+    </div>
+  </app-card>
 </div>
