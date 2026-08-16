@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
-import { API_ENDPOINTS } from '../../core/constants/api.constants';
+import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../../core/constants/api.constants';
 
-import { ChamadoRequest } from '../portal/models/chamado-request';
-import { ChamadoResponse } from '../portal/models/chamado-response';
+import { ChamadoRequest } from '../models/chamado-request';
+import { ChamadoResponse } from '../models/chamado-response';
 
 @Injectable({
   providedIn: 'root',

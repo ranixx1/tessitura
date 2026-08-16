@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
-import { API_ENDPOINTS } from '../../core/constants/api.constants';
+import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../../core/constants/api.constants';
 
-import { Portal } from '../portal/models/portal';
-import { Categoria } from '../portal/models/categoria';
+import { Portal } from '../models/portal';
+import { Categoria } from '../models/categoria';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { ChamadoService } from '../../chamado.service';
+import { ChamadoService } from '../../services/chamado.service';
 import { ChamadoResponse } from '../../models/chamado-response';
 
 @Component({
