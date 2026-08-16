@@ -260,7 +260,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Dashboard
 
-* [ ] Dashboard page
+* [x] Dashboard page
 * [ ] Summary cards
 * [ ] Recent activity
 * [ ] Notifications
