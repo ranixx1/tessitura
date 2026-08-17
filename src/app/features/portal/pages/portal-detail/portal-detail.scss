@@ -1,0 +1,177 @@
+.portal-detail-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.portal-detail-header {
+  margin-bottom: 2rem;
+
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 1.5rem;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #4f46e5;
+    }
+  }
+
+  h1 {
+    margin: 0 0 0.5rem;
+
+    color: #0f172a;
+
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  padding: 1.25rem 1.5rem;
+
+  text-align: left;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    transform: translateX(2px);
+  }
+
+  h2 {
+    margin: 0 0 0.35rem;
+
+    color: #0f172a;
+
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  span {
+    color: #64748b;
+    font-size: 0.8rem;
+  }
+}
+
+.category-arrow {
+  flex-shrink: 0;
+
+  margin-left: 1rem;
+
+  color: #64748b;
+  font-size: 1.25rem;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.category-item:hover .category-arrow {
+  color: #4f46e5;
+  transform: translateX(4px);
+}
+
+.loading {
+  padding: 3rem 1rem;
+
+  text-align: center;
+
+  color: #64748b;
+}
+
+.error {
+  padding: 1rem;
+
+  color: #b91c1c;
+
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  font-size: 0.875rem;
+}
+
+.empty-state {
+  padding: 4rem 2rem;
+
+  text-align: center;
+
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+
+  h2 {
+    margin: 0 0 0.5rem;
+
+    color: #0f172a;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0;
+
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .portal-detail-page {
+    padding: 1rem;
+  }
+
+  .portal-detail-header {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .category-item {
+    padding: 1rem 1.15rem;
+  }
+}

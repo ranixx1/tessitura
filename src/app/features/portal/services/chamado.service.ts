@@ -13,7 +13,7 @@ import { ChamadoResponse } from '../models/chamado-response';
 })
 export class ChamadoService {
   private readonly apiUrl =
-    `${environment.apiUrl}${API_ENDPOINTS.JIRA.CHAMADOS}`;
+    `${environment.jiraApiUrl}${API_ENDPOINTS.JIRA.CHAMADOS}`;
 
   constructor(private readonly http: HttpClient) {}
 

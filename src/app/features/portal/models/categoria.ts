@@ -1,4 +1,5 @@
-export interface Categoria{
-    id: number;
-    nome: string;
+export interface Categoria {
+  id: number;
+  nome: string;
+  portalId?: number;
 }

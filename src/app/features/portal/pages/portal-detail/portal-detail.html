@@ -1,0 +1,87 @@
+<div class="portal-detail-page">
+
+  <header class="portal-detail-header">
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="voltar()"
+    >
+      ← Voltar
+    </button>
+
+    <div>
+      <h1>Categorias</h1>
+
+      <p>
+        Selecione uma categoria para abrir um chamado.
+      </p>
+    </div>
+
+  </header>
+
+  @if (loading) {
+
+    <div class="loading">
+      Carregando categorias...
+    </div>
+
+  }
+
+  @if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+  @if (!loading && !errorMessage) {
+
+    @if (categorias.length === 0) {
+
+      <div class="empty-state">
+        <h2>Nenhuma categoria disponível</h2>
+
+        <p>
+          Este portal ainda não possui categorias cadastradas.
+        </p>
+      </div>
+
+    } @else {
+
+      <div class="category-list">
+
+        @for (categoria of categorias; track categoria.id) {
+
+          <button
+            type="button"
+            class="category-item"
+            (click)="abrirCategoria(categoria)"
+          >
+
+            <div>
+              <h2>
+                {{ categoria.nome }}
+              </h2>
+
+              <span>
+                Abrir chamado
+              </span>
+            </div>
+
+            <span class="category-arrow">
+              →
+            </span>
+
+          </button>
+
+        }
+
+      </div>
+
+    }
+
+  }
+
+</div>
