@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Categoria } from '../../models/categoria';
-import { Portal } from '../../models/portal';
-import { PortalConfigService } from '../../services/portal-config.service';
+import { Portal } from '../../../models/portal';
+import { Categoria } from '../../../models/categoria';
+import { PortalConfigService } from '../../../services/portal-config.service';
 
 @Component({
   selector: 'app-portal-detail',
@@ -25,29 +25,52 @@ export class PortalDetailComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly portalConfigService: PortalConfigService,
-  ) {}
+    private readonly cdr: ChangeDetectorRef,
+
+  ) { }
 
   ngOnInit(): void {
-    this.portalId = Number(
-      this.route.snapshot.paramMap.get('id'),
+    const id = Number(
+      this.route.snapshot.paramMap.get('portalId'),
     );
+
+    if (!id) {
+      this.router.navigate(['/portal']);
+      return;
+    }
+
+    this.portalId = id;
 
     this.carregarCategorias();
   }
 
   private carregarCategorias(): void {
     this.loading = true;
+    this.errorMessage = '';
+    this.cdr.detectChanges();
+
 
     this.portalConfigService
       .listarCategoriasPorPortal(this.portalId)
       .subscribe({
         next: (categorias) => {
-          this.categorias = categorias;
+          this.categorias = categorias ?? [];
           this.loading = false;
+          this.cdr.detectChanges();
+
         },
 
-        error: () => {
+        error: (error) => {
+          console.error(
+            'Erro ao carregar categorias:',
+            error,
+          );
+
+          this.categorias = [];
           this.loading = false;
+          this.cdr.detectChanges();
+
+
           this.errorMessage =
             'Não foi possível carregar as categorias.';
         },
@@ -56,9 +79,10 @@ export class PortalDetailComponent implements OnInit {
 
   abrirCategoria(categoria: Categoria): void {
     this.router.navigate(
-      ['/portal', this.portalId, 'chamado'],
+      ['/helpdesk/novo'],
       {
         queryParams: {
+          portalId: this.portalId,
           categoriaId: categoria.id,
         },
       },

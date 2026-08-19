@@ -3,9 +3,9 @@ import { Routes } from '@angular/router';
 import { authGuard } from '../../core/guards/auth-guard';
 
 import { PortalDashboardComponent } from './pages/dashboard/portal-dashboard';
+import { PortalDetailComponent } from './pages/detail/portal-detail/portal-detail';
 
 export const PORTAL_ROUTES: Routes = [
-
   {
     path: '',
     canActivate: [authGuard],
@@ -13,11 +13,8 @@ export const PORTAL_ROUTES: Routes = [
   },
 
   {
-    path: ':id',
+    path: ':portalId',
     canActivate: [authGuard],
-    loadComponent: () =>
-      import('./pages/portal-detail/portal-detail')
-        .then((m) => m.PortalDetailComponent),
+    component: PortalDetailComponent,
   },
-
 ];
