@@ -1,69 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { ChamadoService } from '../../chamado.service';
-import { ChamadoResponse } from '../../models/chamado-response';
+import { Portal } from '../../models/portal';
+import { PortalConfigService } from '../../services/portal-config.service';
 
 @Component({
   selector: 'app-portal-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-  ],
   templateUrl: './portal-dashboard.html',
   styleUrl: './portal-dashboard.scss',
 })
 export class PortalDashboardComponent implements OnInit {
-  chamados: ChamadoResponse[] = [];
 
-  loading = true;
+  portals: Portal[] = [];
+  loading = false;
   errorMessage = '';
 
   constructor(
-    private readonly chamadoService: ChamadoService,
-  ) {}
+    private readonly portalConfigService: PortalConfigService,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
-    this.carregarChamados();
+    this.carregarPortais();
   }
 
-  private carregarChamados(): void {
+  carregarPortais(): void {
     this.loading = true;
     this.errorMessage = '';
 
-    this.chamadoService.listarMeus().subscribe({
-      next: (chamados) => {
-        this.chamados = chamados;
+    this.portalConfigService.listarPortais().subscribe({
+      next: (portals) => {
+        console.log('Portais recebidos:', portals);
+
+        this.portals = portals ?? [];
         this.loading = false;
+        this.cdr.detectChanges();
       },
 
-      error: () => {
+      error: (error) => {
+        console.error('Erro ao carregar portais:', error);
+
+        this.portals = [];
         this.loading = false;
+
         this.errorMessage =
-          'Não foi possível carregar seus chamados.';
+          'Não foi possível carregar os portais.';
+      },
+
+      complete: () => {
+        this.loading = false;
       },
     });
   }
 
-  get chamadosAbertos(): number {
-    return this.chamados.filter(
-      (chamado) => chamado.status === 'ABERTO',
-    ).length;
-  }
-
-  get chamadosFechados(): number {
-    return this.chamados.filter(
-      (chamado) => chamado.status === 'FECHADO',
-    ).length;
-  }
-
-  get chamadosPendentes(): number {
-    return this.chamados.filter(
-      (chamado) =>
-        chamado.status !== 'ABERTO' &&
-        chamado.status !== 'FECHADO',
-    ).length;
+  abrirPortal(portal: Portal): void {
+    this.router.navigate(['/portal', portal.id]);
   }
 }

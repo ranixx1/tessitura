@@ -16,9 +16,10 @@ import { ResetPasswordRequest } from '../models/reset-password-request';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = `${environment.apiUrl}${API_ENDPOINTS.AUTH.BASE}`;
+  private readonly apiUrl =
+    `${environment.authApiUrl}${API_ENDPOINTS.AUTH.BASE}`;
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
   register(data: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(

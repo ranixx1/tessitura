@@ -1,4 +1,5 @@
 @use '../../styles/tokens' as *;
+@use '../../styles/mixins' as *;
 
 .button {
   width: 100%;
@@ -19,8 +20,7 @@
     transform $transition-fast;
 
   &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    @include focus-ring($color-primary);
   }
 
   &:active:not(:disabled) {

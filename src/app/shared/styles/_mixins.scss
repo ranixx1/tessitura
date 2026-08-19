@@ -2,6 +2,8 @@
 // Tessitura SCSS Mixins
 // ============================================
 
+@use './tokens' as *;
+
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -40,6 +42,23 @@
     }
   } @else if $breakpoint == xl {
     @media (min-width: 1280px) {
+      @content;
+    }
+  }
+}
+
+
+@mixin respond-below($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 639px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: 1023px) {
       @content;
     }
   }

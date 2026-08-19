@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  apiUrl: 'http://localhost:8080',
-  apiTimeout: 30000,
-  apiVersion: 'v1',
+  production: false,
+
+  authApiUrl: 'http://localhost:8080',
+  jiraApiUrl: 'http://localhost:8082',
 };

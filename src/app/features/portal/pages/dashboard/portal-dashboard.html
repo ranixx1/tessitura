@@ -1,124 +1,93 @@
-<section class="dashboard">
-  <header class="dashboard-header">
+<div class="portal-page">
+
+  <header class="portal-header">
     <div>
-      <h1>Olá!</h1>
+      <h1>Portais</h1>
+
       <p>
-        Acompanhe seus chamados e solicitações.
+        Selecione um portal para visualizar os serviços disponíveis.
       </p>
     </div>
-
-    <a
-      routerLink="/portal/chamados/novo"
-      class="new-ticket-button"
-    >
-      Novo chamado
-    </a>
   </header>
 
-  @if (errorMessage) {
-    <div class="error-message">
-      {{ errorMessage }}
-    </div>
-  }
+  @if (loading) {
 
-  <section class="stats">
-    <article class="stat-card">
-      <span class="stat-label">
-        Abertos
-      </span>
-
-      <strong>
-        {{ chamadosAbertos }}
-      </strong>
-    </article>
-
-    <article class="stat-card">
-      <span class="stat-label">
-        Pendentes
-      </span>
-
-      <strong>
-        {{ chamadosPendentes }}
-      </strong>
-    </article>
-
-    <article class="stat-card">
-      <span class="stat-label">
-        Fechados
-      </span>
-
-      <strong>
-        {{ chamadosFechados }}
-      </strong>
-    </article>
-  </section>
-
-  <section class="tickets">
-    <div class="section-header">
-      <div>
-        <h2>Meus chamados</h2>
-        <p>
-          Chamados criados por você.
-        </p>
-      </div>
-
-      <a routerLink="/portal/chamados">
-        Ver todos
-      </a>
+    <div class="portal-loading">
+      <span class="loading-spinner"></span>
+      <span>Carregando portais...</span>
     </div>
 
-    @if (loading) {
-      <div class="loading">
-        Carregando chamados...
-      </div>
-    } @else if (chamados.length === 0) {
-      <div class="empty-state">
-        <h3>Nenhum chamado encontrado</h3>
+  } @else if (errorMessage) {
 
-        <p>
-          Você ainda não abriu nenhum chamado.
-        </p>
+    <div class="portal-error">
+      <h2>Não foi possível carregar os portais</h2>
 
-        <a
-          routerLink="/portal/chamados/novo"
-          class="new-ticket-button"
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        (click)="carregarPortais()"
+      >
+        Tentar novamente
+      </button>
+    </div>
+
+  } @else if (portals.length === 0) {
+
+    <div class="empty-state">
+
+      <h2>Nenhum portal disponível</h2>
+
+      <p>
+        Não existem portais cadastrados no momento.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <div class="portal-grid">
+
+      @for (portal of portals; track portal.id) {
+
+        <button
+          type="button"
+          class="portal-card"
+          (click)="abrirPortal(portal)"
         >
-          Abrir chamado
-        </a>
-      </div>
-    } @else {
-      <div class="ticket-list">
-        @for (chamado of chamados; track chamado.id) {
-          <a
-            class="ticket"
-            [routerLink]="['/portal/chamados', chamado.id]"
-          >
-            <div class="ticket-main">
-              <span class="ticket-code">
-                {{ chamado.codigo }}
-              </span>
 
-              <h3>
-                {{ chamado.titulo }}
-              </h3>
+          <div class="portal-card-icon">
+            {{ portal.codigo }}
+          </div>
+
+          <div class="portal-card-content">
+
+            <h2>
+              {{ portal.nome }}
+            </h2>
+
+            @if (portal.descricao) {
 
               <p>
-                {{ chamado.descricao }}
+                {{ portal.descricao }}
               </p>
-            </div>
 
-            <div class="ticket-meta">
-              <span>
-                {{ chamado.status }}
-              </span>
+            }
 
-              <span>
-                {{ chamado.prioridade }}
-              </span>
-            </div>
-          </a>
-        }
-      </div>
-    }
-  </section>
-</section>
+          </div>
+
+          <span class="portal-card-arrow">
+            →
+          </span>
+
+        </button>
+
+      }
+
+    </div>
+
+  }
+
+</div>

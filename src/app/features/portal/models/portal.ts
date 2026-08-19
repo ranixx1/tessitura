@@ -1,5 +1,7 @@
 export interface Portal {
   id: number;
+  codigo: string;
   nome: string;
-  sigla: string;
+  descricao: string | null;
+  criadoEm: string;
 }

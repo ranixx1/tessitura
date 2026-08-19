@@ -8,11 +8,14 @@ export const API_ENDPOINTS = {
   },
 
   JIRA: {
-    CHAMADOS: '/chamados',
+    BASE: '/config/chamados',
 
-    CONFIG: {
-      PORTAIS: '/config/chamados/portais',
-      CATEGORIAS: '/config/chamados/categorias',
-    },
+    PORTAIS: '/portais',
+
+    CATEGORIAS: '/categorias',
+
+    SUBTOPICOS: '/subtopicos',
+
+    CHAMADOS: '/chamados',
   },
 } as const;

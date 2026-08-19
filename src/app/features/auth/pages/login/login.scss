@@ -1,32 +1,19 @@
+@use '../../styles/auth-page' as *;
+
 .login-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  @extend %auth-page;
 }
 
 .login-card {
-  width: 100%;
-  max-width: 520px;
+  @extend %auth-card;
 }
 
 .login-header {
-  margin-bottom: 1.5rem;
-
-  h1 {
-    margin: 0 0 0.5rem;
-  }
-
-  p {
-    margin: 0;
-  }
+  @extend %auth-header;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  @extend %auth-form;
 }
 
 .login-options {
@@ -35,14 +22,8 @@ form {
   margin-top: -0.25rem;
 
   a {
-    color: #4f46e5;
-    text-decoration: none;
+    @extend %auth-link;
     font-size: 0.875rem;
-    font-weight: 500;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -59,12 +40,6 @@ form {
   }
 
   a {
-    color: #4f46e5;
-    text-decoration: none;
-    font-weight: 600;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    @extend %auth-link;
   }
 }
