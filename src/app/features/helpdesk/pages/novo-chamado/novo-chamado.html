@@ -1,0 +1,306 @@
+<div class="novo-chamado-page">
+
+  <header class="novo-chamado-header">
+
+    <div>
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="voltar()"
+      >
+        ← Voltar
+      </button>
+
+      <h1>Novo chamado</h1>
+
+      <p>
+        Descreva sua solicitação e forneça as informações necessárias.
+      </p>
+
+    </div>
+
+  </header>
+
+
+  @if (loading) {
+
+    <div class="loading-state">
+      Carregando informações...
+    </div>
+
+  } @else {
+
+    @if (errorMessage) {
+
+      <div class="error-state">
+        {{ errorMessage }}
+      </div>
+
+    }
+
+    @if (successMessage) {
+
+      <div class="success-state">
+        {{ successMessage }}
+      </div>
+
+    }
+
+
+    <form
+      class="chamado-form"
+      [formGroup]="form"
+      (ngSubmit)="abrirChamado()"
+    >
+
+      <!-- INFORMAÇÕES -->
+
+      <section class="form-section">
+
+        <div class="section-header">
+
+          <h2>Informações do chamado</h2>
+
+          <p>
+            Informe o problema ou solicitação.
+          </p>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="titulo">
+            Título
+          </label>
+
+          <input
+            id="titulo"
+            type="text"
+            formControlName="titulo"
+            placeholder="Ex.: Não consigo acessar o sistema"
+          />
+
+          @if (
+            form.controls.titulo.touched &&
+            form.controls.titulo.invalid
+          ) {
+
+            <span class="field-error">
+              Informe um título válido.
+            </span>
+
+          }
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="descricao">
+            Descrição
+          </label>
+
+          <textarea
+            id="descricao"
+            rows="7"
+            formControlName="descricao"
+            placeholder="Descreva detalhadamente o problema..."
+          ></textarea>
+
+          @if (
+            form.controls.descricao.touched &&
+            form.controls.descricao.invalid
+          ) {
+
+            <span class="field-error">
+              A descrição deve possuir pelo menos 10 caracteres.
+            </span>
+
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- CLASSIFICAÇÃO -->
+
+      <section class="form-section">
+
+        <div class="section-header">
+
+          <h2>Classificação</h2>
+
+          <p>
+            Classifique o chamado para direcioná-lo corretamente.
+          </p>
+
+        </div>
+
+
+        @if (subtopicos.length > 0) {
+
+          <div class="form-group">
+
+            <label for="subtopico">
+              Subtópico
+            </label>
+
+            <select
+              id="subtopico"
+              formControlName="subtopicoId"
+            >
+
+              <option [ngValue]="null">
+                Selecione um subtópico
+              </option>
+
+              @for (
+                subtopico of subtopicos;
+                track subtopico.id
+              ) {
+
+                <option [ngValue]="subtopico.id">
+                  {{ subtopico.nome }}
+                </option>
+
+              }
+
+              <option [ngValue]="null">
+                Outro
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="outroSubtopico">
+              Outro subtópico
+            </label>
+
+            <input
+              id="outroSubtopico"
+              type="text"
+              formControlName="outroSubtopico"
+              placeholder="Caso não encontre o subtópico desejado"
+            />
+
+          </div>
+
+        }
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="prioridade">
+              Prioridade
+            </label>
+
+            <select
+              id="prioridade"
+              formControlName="prioridade"
+            >
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option value="BAIXA">
+                Baixa
+              </option>
+
+              <option value="MEDIA">
+                Média
+              </option>
+
+              <option value="ALTA">
+                Alta
+              </option>
+
+              <option value="URGENTE">
+                Urgente
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="escopo">
+              Escopo
+            </label>
+
+            <select
+              id="escopo"
+              formControlName="escopo"
+            >
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option value="INDIVIDUAL">
+                Individual
+              </option>
+
+              <option value="SETOR">
+                Setor
+              </option>
+
+              <option value="EMPRESA">
+                Empresa
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- AÇÕES -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          [disabled]="submitting"
+          (click)="voltar()"
+        >
+          Cancelar
+        </button>
+
+
+        <button
+          type="submit"
+          class="primary-button"
+          [disabled]="form.invalid || submitting"
+        >
+
+          @if (submitting) {
+            Abrindo chamado...
+          } @else {
+            Abrir chamado
+          }
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</div>

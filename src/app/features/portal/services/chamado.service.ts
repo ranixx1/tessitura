@@ -3,52 +3,36 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { API_ENDPOINTS } from '../../../core/constants/api.constants';
-
-import { ChamadoRequest } from '../models/chamado-request';
 import { ChamadoResponse } from '../models/chamado-response';
+
+export interface CriarChamadoRequest {
+  titulo: string;
+  descricao: string;
+  portalId: number;
+  categoriaId: number;
+  subtopicoId: number | null;
+  outroSubtopico: string | null;
+  prioridade: string;
+  escopo: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChamadoService {
-  private readonly apiUrl =
-    `${environment.jiraApiUrl}${API_ENDPOINTS.JIRA.CHAMADOS}`;
+  private readonly apiUrl = `${environment.jiraApiUrl}/chamados`;
 
   constructor(private readonly http: HttpClient) {}
 
-  listarTodos(): Observable<ChamadoResponse[]> {
-    return this.http.get<ChamadoResponse[]>(
-      this.apiUrl,
-    );
+  criarChamado(data: CriarChamadoRequest): Observable<ChamadoResponse> {
+    return this.http.post<ChamadoResponse>(this.apiUrl, data);
   }
 
-  listarMeus(): Observable<ChamadoResponse[]> {
-    return this.http.get<ChamadoResponse[]>(
-      `${this.apiUrl}/meus`,
-    );
+  listarChamados(): Observable<ChamadoResponse[]> {
+    return this.http.get<ChamadoResponse[]>(this.apiUrl);
   }
 
-  buscarPorId(id: number): Observable<ChamadoResponse> {
-    return this.http.get<ChamadoResponse>(
-      `${this.apiUrl}/id/${id}`,
-    );
-  }
-
-  criar(data: ChamadoRequest): Observable<ChamadoResponse> {
-    return this.http.post<ChamadoResponse>(
-      this.apiUrl,
-      data,
-    );
-  }
-
-  adicionarComentario(
-    chamadoId: number,
-    mensagem: string,
-  ): Observable<ChamadoResponse> {
-    return this.http.post<ChamadoResponse>(
-      `${this.apiUrl}/${chamadoId}/comentarios`,
-      { mensagem },
-    );
+  listarMeusChamados(): Observable<ChamadoResponse[]> {
+    return this.http.get<ChamadoResponse[]>(`${this.apiUrl}/meus`);
   }
 }
