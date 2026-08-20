@@ -1,0 +1,59 @@
+<div class="chamados-page">
+  <header class="chamados-header">
+    <h1>Chamados</h1>
+    <p>Consulte os chamados disponíveis.</p>
+  </header>
+
+  @if (loading) {
+    <div class="loading-state">
+      Carregando chamados...
+    </div>
+  } 
+  @else if (errorMessage) {
+    <div class="error-state">
+      {{ errorMessage }}
+    </div>
+  } 
+  @else if (chamados.length === 0) {
+    <div class="empty-state">
+      <h2>Nenhum chamado encontrado</h2>
+      <p>A listagem dos chamados será carregada aqui quando houver registros.</p>
+    </div>
+  } 
+  @else {
+    <div class="table-container">
+      <table class="chamados-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Título</th>
+            <th>Portal</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th>Data de Abertura</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (chamado of chamados; track chamado.id) {
+            <tr>
+              <td><strong>{{ chamado.codigo }}</strong></td>
+              <td>{{ chamado.titulo }}</td>
+              <td>{{ chamado.portal.sigla || '-' }}</td>
+              <td>
+                <span class="badge prioridade-{{ chamado.prioridade.toLowerCase() }}">
+                  {{ chamado.prioridade }}
+                </span>
+              </td>
+              <td>
+                <span class="badge status-{{ chamado.status.toLowerCase() }}">
+                  {{ chamado.status }}
+                </span>
+              </td>
+              <td>{{ chamado.horarioAbertura | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
