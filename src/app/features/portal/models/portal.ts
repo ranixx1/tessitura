@@ -4,4 +4,5 @@ export interface Portal {
   nome: string;
   descricao: string | null;
   criadoEm: string;
+  sigla?: string; 
 }
