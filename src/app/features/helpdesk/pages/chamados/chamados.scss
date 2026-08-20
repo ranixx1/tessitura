@@ -1,0 +1,146 @@
+.chamados-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.chamados-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 1rem;
+  }
+}
+
+.loading-state,
+.empty-state {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    color: #0f172a;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+  }
+}
+
+.error-state {
+  padding: 1rem 1.25rem;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.table-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.chamados-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th {
+    background: #f8fafc;
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  td {
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    color: #0f172a;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.prioridade-baixa {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.prioridade-normal {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.prioridade-alta {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-aberto {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-em_progresso {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.status-aguardando_usuario {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.status-fechado {
+  background: #dcfce3;
+  color: #166534;
+}
+
+@media (max-width: 768px) {
+  .chamados-page {
+    padding: 1.5rem;
+  }
+}
