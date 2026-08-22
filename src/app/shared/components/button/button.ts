@@ -12,4 +12,5 @@ export class ButtonComponent {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() disabled = false;
   @Input() loading = false;
+  @Input() fullWidth = true;
 }

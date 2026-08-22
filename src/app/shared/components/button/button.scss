@@ -92,6 +92,10 @@
     font-size: $font-size-md;
   }
 
+  &--auto {
+    width: auto;
+  }
+
   &__spinner {
     width: 16px;
     height: 16px;

@@ -18,15 +18,31 @@
   box-shadow: $shadow-lg;
 }
 
+%auth-eyebrow {
+  display: block;
+  margin-bottom: $spacing-2;
+
+  color: $color-primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 %auth-header {
   margin-bottom: $spacing-6;
 
   h1 {
     margin: 0 0 $spacing-2;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
   }
 
   p {
     margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
   }
 }
 

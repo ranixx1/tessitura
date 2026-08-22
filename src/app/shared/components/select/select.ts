@@ -2,29 +2,32 @@ import { Component, forwardRef, Input } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+export interface SelectOption {
+  value: string;
+  label: string;
+}
+
 @Component({
-  selector: 'app-input',
+  selector: 'app-select',
   standalone: true,
-  templateUrl: './input.html',
-  styleUrl: './input.scss',
+  templateUrl: './select.html',
+  styleUrl: './select.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
+      useExisting: forwardRef(() => SelectComponent),
       multi: true,
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor {
   @Input() label = '';
-  @Input() type = 'text';
-  @Input() placeholder = '';
   @Input() name = '';
   @Input() id = '';
   @Input() required = false;
-  @Input() autocomplete = '';
   @Input() error = '';
-  @Input() rows = 4;
+  @Input() placeholder = 'Selecione';
+  @Input() options: SelectOption[] = [];
 
   disabled = false;
   value = '';
@@ -48,10 +51,10 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onInput(event: Event): void {
-    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+  onChangeEvent(event: Event): void {
+    const select = event.target as HTMLSelectElement;
 
-    this.value = target.value;
+    this.value = select.value;
     this.onChange(this.value);
   }
 

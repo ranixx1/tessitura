@@ -9,6 +9,7 @@
   [class.button--sm]="size === 'sm'"
   [class.button--md]="size === 'md'"
   [class.button--lg]="size === 'lg'"
+  [class.button--auto]="!fullWidth"
 >
   @if (loading) {
     <span class="button__spinner"></span>

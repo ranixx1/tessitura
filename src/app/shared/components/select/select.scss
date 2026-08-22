@@ -1,7 +1,7 @@
 @use '../../styles/tokens' as *;
 @use '../../styles/mixins' as *;
 
-.input-field {
+.select-field {
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
@@ -22,11 +22,11 @@
     color: $color-danger;
   }
 
-  input,
-  textarea {
+  select {
     width: 100%;
+    min-height: 44px;
 
-    padding: $spacing-3;
+    padding: 0 $spacing-3;
 
     border: 1px solid $color-border-strong;
     border-radius: $radius-md;
@@ -42,10 +42,6 @@
       box-shadow $transition-fast,
       background-color $transition-fast;
 
-    &::placeholder {
-      color: $color-text-muted;
-    }
-
     &:hover:not(:disabled) {
       border-color: $color-gray-400;
     }
@@ -60,16 +56,5 @@
       color: $color-gray-500;
       cursor: not-allowed;
     }
-  }
-
-  input {
-    min-height: 44px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  textarea {
-    resize: vertical;
-    line-height: $line-height-normal;
   }
 }

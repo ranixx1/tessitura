@@ -28,3 +28,7 @@ form {
     @extend %auth-link;
   }
 }
+
+.register-eyebrow {
+  @extend %auth-eyebrow;
+}
