@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { ChamadoResponse } from '../models/chamado-response';
+import { API_ENDPOINTS } from '../../../core/constants/api.constants';
 
 export interface CriarChamadoRequest {
   titulo: string;
@@ -20,14 +21,23 @@ export interface CriarChamadoRequest {
   providedIn: 'root',
 })
 export class ChamadoService {
-  private readonly apiUrl = `${environment.jiraApiUrl}/chamados`;
 
-  constructor(private readonly http: HttpClient) {}
+  private readonly apiUrl =
+    `${environment.jiraApiUrl}${API_ENDPOINTS.JIRA.CHAMADOS.BASE}`;
 
-  criarChamado(data: CriarChamadoRequest): Observable<ChamadoResponse> {
-    return this.http.post<ChamadoResponse>(this.apiUrl, data);
+  constructor(
+    private readonly http: HttpClient,
+  ) {}
+
+  criarChamado(
+    data: CriarChamadoRequest,
+  ): Observable<ChamadoResponse> {
+
+    return this.http.post<ChamadoResponse>(
+      this.apiUrl,
+      data,
+    );
   }
-
   listarChamados(): Observable<ChamadoResponse[]> {
     return this.http.get<ChamadoResponse[]>(this.apiUrl);
   }

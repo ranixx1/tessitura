@@ -1,230 +1,124 @@
+@use '../../../../shared/styles/tokens' as *;
+@use '../../../../shared/styles/mixins' as *;
+
 .novo-chamado-page {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-10;
 }
 
 .novo-chamado-header {
-    max-width: 800px;
-    margin: 0 auto 2rem;
-    /* Centraliza nas laterais e mantém o espaço de 2rem embaixo */
+  max-width: 800px;
+  margin: 0 auto $spacing-8;
 
-    .back-button {
-        background: none;
-        border: none;
-        padding: 0;
-        margin-bottom: 1rem;
+  .back-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: $spacing-4;
 
-        color: #64748b;
-        font-size: 0.9rem;
-        font-weight: 600;
+    color: $color-text-secondary;
+    font-size: 0.9rem;
+    font-weight: $font-weight-semibold;
 
-        cursor: pointer;
-        transition: color 0.2s ease;
+    cursor: pointer;
+    transition: color $transition-normal;
 
-        &:hover {
-            color: #4f46e5;
-        }
+    &:hover {
+      color: $color-primary;
     }
+  }
 
-    h1 {
-        margin: 0 0 0.5rem;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #0f172a;
-    }
+  h1 {
+    margin: 0 0 $spacing-2;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+  }
 
-    p {
-        margin: 0;
-        color: #64748b;
-        font-size: 1rem;
-    }
+  p {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: $font-size-md;
+  }
 }
 
 .loading-state {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 0;
-    color: #64748b;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-8 0;
+  color: $color-text-secondary;
 }
 
-.error-state {
-    max-width: 800px;
-    margin: 0 auto 1.5rem;
-    padding: 1rem 1.25rem;
-    color: #b91c1c;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 8px;
+// error/success viram <app-alert>, subtópico/prioridade/escopo viram
+// <app-select>, título/descrição/outro-subtópico viram <app-input>,
+// os botões viram <app-button>, o form todo mora num <app-card> —
+// o que sobra aqui é só o layout, não mais componente reinventado
+
+app-alert {
+  display: block;
+  max-width: 800px;
+  margin: 0 auto $spacing-6;
 }
 
-.success-state {
-    max-width: 800px;
-    margin: 0 auto 1.5rem;
-    padding: 1rem 1.25rem;
-    color: #15803d;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 8px;
-}
-
-.chamado-form {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+.chamado-form-card {
+  display: block;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .form-section {
-    margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
 
-    &:last-of-type {
-        margin-bottom: 2rem;
-    }
+  margin-bottom: $spacing-10;
+
+  &:last-of-type {
+    margin-bottom: $spacing-8;
+  }
 }
 
 .section-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f1f5f9;
+  padding-bottom: $spacing-3;
+  border-bottom: 1px solid $color-gray-100;
 
-    h2 {
-        margin: 0 0 0.25rem;
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #0f172a;
-    }
+  h2 {
+    margin: 0 0 $spacing-1;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
 
-    p {
-        margin: 0;
-        font-size: 0.875rem;
-        color: #64748b;
-    }
+  p {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
 }
 
 .form-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #334155;
-    }
-
-    input,
-    select,
-    textarea {
-        width: 100%;
-        padding: 0.75rem 1rem;
-
-        font-family: inherit;
-        font-size: 0.95rem;
-        color: #0f172a;
-
-        background: #fff;
-        border: 1px solid #cbd5e1;
-        border-radius: 8px;
-
-        transition: all 0.2s ease;
-
-        &::placeholder {
-            color: #94a3b8;
-        }
-
-        &:focus {
-            outline: none;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); // Efeito de brilho da marca
-        }
-    }
-
-    .field-error {
-        display: block;
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-        color: #ef4444;
-    }
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $spacing-6;
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-4;
 
-    padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
-
-    button {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.95rem;
-        font-weight: 600;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-    }
-
-    .secondary-button {
-        background: #fff;
-        color: #475569;
-        border: 1px solid #cbd5e1;
-
-        &:hover:not(:disabled) {
-            background: #f8fafc;
-            color: #0f172a;
-        }
-    }
-
-    .primary-button {
-        background: #4f46e5;
-        color: #fff;
-        border: 1px solid #4f46e5;
-
-        &:hover:not(:disabled) {
-            background: #4338ca;
-            border-color: #4338ca;
-        }
-
-        &:focus-visible {
-            outline: 2px solid #4f46e5;
-            outline-offset: 2px;
-        }
-    }
+  padding-top: $spacing-6;
+  border-top: 1px solid $color-border;
 }
 
-@media (max-width: 768px) {
-    .novo-chamado-page {
-        padding: 1.5rem;
-    }
+@include respond-below(md) {
+  .novo-chamado-page {
+    padding: $spacing-6;
+  }
 
-    .chamado-form {
-        padding: 1.5rem;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }
