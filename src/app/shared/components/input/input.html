@@ -9,16 +9,36 @@
     </label>
   }
 
-  <input
-    [id]="id"
-    [name]="name"
-    [type]="type"
-    [value]="value"
-    [placeholder]="placeholder"
-    [disabled]="disabled"
-    [required]="required"
-    [autocomplete]="autocomplete"
-    (input)="onInput($event)"
-    (blur)="onBlur()"
-  />
+  @if (type === 'textarea') {
+    <textarea
+      [id]="id"
+      [name]="name"
+      [rows]="rows"
+      [value]="value"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [required]="required"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    ></textarea>
+  } @else {
+    <input
+      [id]="id"
+      [name]="name"
+      [type]="type"
+      [value]="value"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [required]="required"
+      [autocomplete]="autocomplete"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+    />
+  }
+
+  @if (error) {
+    <span class="input-field__error">
+      {{ error }}
+    </span>
+  }
 </div>

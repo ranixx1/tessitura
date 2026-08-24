@@ -1,59 +1,191 @@
 <div class="chamados-page">
   <header class="chamados-header">
-    <h1>Chamados</h1>
-    <p>Consulte os chamados disponíveis.</p>
+
+    <div class="chamados-header-content">
+      <h1>Chamados</h1>
+
+      <p>
+        Acompanhe e gerencie os chamados disponíveis.
+      </p>
+    </div>
+
+    <button type="button" class="new-chamado-button" (click)="novoChamado()">
+      + Novo chamado
+    </button>
+
   </header>
 
+
+  <section class="chamados-filters">
+
+    <div class="filter-group">
+
+      <label for="status">
+        Status
+      </label>
+
+      <select id="status" [(ngModel)]="filtroStatus" (change)="aplicarFiltros()">
+        <option value="">
+          Todos
+        </option>
+
+        <option value="ABERTO">
+          Aberto
+        </option>
+
+        <option value="EM_PROGRESSO">
+          Em progresso
+        </option>
+
+        <option value="AGUARDANDO_USUARIO">
+          Aguardando usuário
+        </option>
+
+        <option value="FECHADO">
+          Fechado
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="filter-group">
+
+      <label for="prioridade">
+        Prioridade
+      </label>
+
+      <select id="prioridade" [(ngModel)]="filtroPrioridade" (change)="aplicarFiltros()">
+        <option value="">
+          Todas
+        </option>
+
+        <option value="BAIXA">
+          Baixa
+        </option>
+
+        <option value="NORMAL">
+          Normal
+        </option>
+
+        <option value="ALTA">
+          Alta
+        </option>
+
+      </select>
+
+    </div>
+
+  </section>
+
+
   @if (loading) {
-    <div class="loading-state">
-      Carregando chamados...
-    </div>
-  } 
-  @else if (errorMessage) {
-    <div class="error-state">
-      {{ errorMessage }}
-    </div>
-  } 
-  @else if (chamados.length === 0) {
-    <div class="empty-state">
-      <h2>Nenhum chamado encontrado</h2>
-      <p>A listagem dos chamados será carregada aqui quando houver registros.</p>
-    </div>
-  } 
-  @else {
-    <div class="table-container">
-      <table class="chamados-table">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Título</th>
-            <th>Portal</th>
-            <th>Prioridade</th>
-            <th>Status</th>
-            <th>Data de Abertura</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (chamado of chamados; track chamado.id) {
-            <tr>
-              <td><strong>{{ chamado.codigo }}</strong></td>
-              <td>{{ chamado.titulo }}</td>
-              <td>{{ chamado.portal.sigla || '-' }}</td>
-              <td>
-                <span class="badge prioridade-{{ chamado.prioridade.toLowerCase() }}">
-                  {{ chamado.prioridade }}
-                </span>
-              </td>
-              <td>
-                <span class="badge status-{{ chamado.status.toLowerCase() }}">
-                  {{ chamado.status }}
-                </span>
-              </td>
-              <td>{{ chamado.horarioAbertura | date:'dd/MM/yyyy HH:mm' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+
+  <div class="loading-state">
+    Carregando chamados...
+  </div>
+
   }
+
+
+  @else if (errorMessage) {
+
+  <div class="error-state">
+    {{ errorMessage }}
+  </div>
+
+  }
+
+  @else if (chamadosFiltrados.length === 0) {
+
+  <div class="empty-state">
+
+    <h2>
+      Nenhum chamado encontrado
+    </h2>
+
+    <p>
+      Não existem chamados correspondentes aos filtros selecionados.
+    </p>
+
+  </div>
+
+  }
+
+
+  @else {
+
+  <div class="chamados-grid">
+
+    @for (
+    chamado of chamadosFiltrados;
+    track chamado.id
+    ) {
+
+    <button type="button" class="chamado-card" (click)="abrirChamado(chamado)">
+
+      <div class="chamado-card-header">
+
+        <span class="chamado-code">
+          {{ chamado.codigo }}
+        </span>
+
+        <span class="chamado-status" [ngClass]="getStatusClass(chamado.status)">
+          {{ formatarStatus(chamado.status) }}
+        </span>
+
+      </div>
+
+
+      <div class="chamado-card-content">
+
+        <h2>
+          {{ chamado.titulo }}
+        </h2>
+
+        <p>
+          {{ chamado.descricao }}
+        </p>
+
+      </div>
+
+
+      <div class="chamado-card-info">
+
+        @if (chamado.portal) {
+
+        <span class="chamado-info-item">
+          {{ chamado.portal.nome }}
+        </span>
+
+        }
+
+        @if (chamado.categoria) {
+
+        <span class="chamado-info-item">
+          {{ chamado.categoria.nome }}
+        </span>
+
+        }
+
+        <span class="prioridade" [ngClass]="getPrioridadeClass(chamado.prioridade)">
+          {{ formatarPrioridade(chamado.prioridade) }}
+        </span>
+
+      </div>
+
+
+      <span class="chamado-card-arrow">
+        →
+      </span>
+
+    </button>
+
+    }
+
+  </div>
+
+  }
+
 </div>

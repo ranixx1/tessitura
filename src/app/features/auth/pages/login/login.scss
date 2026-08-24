@@ -12,6 +12,10 @@
   @extend %auth-header;
 }
 
+.login-eyebrow {
+  @extend %auth-eyebrow;
+}
+
 form {
   @extend %auth-form;
 }

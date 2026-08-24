@@ -1,8 +1,6 @@
 export const API_ENDPOINTS = {
-
   AUTH: {
     BASE: '/auth',
-
     LOGIN: '/login',
     REGISTER: '/register',
     FORGOT_PASSWORD: '/forgot-password',
@@ -10,19 +8,15 @@ export const API_ENDPOINTS = {
   },
 
   JIRA: {
+    CONFIG_BASE: '/config/chamados',
 
-    CONFIG: {
-      BASE: '/config/chamados',
+    PORTAIS: '/portais',
+    CATEGORIAS: '/categorias',
+    SUBTOPICOS: '/subtopicos',
 
-      PORTAIS: '/portais',
-      CATEGORIAS: '/categorias',
-      SUBTOPICOS: '/subtopicos',
-    },
+    CHAMADOS_BASE: '/chamados',
 
-    CHAMADOS: {
-      BASE: '/chamados',
-    },
-
+    CHAMADOS: '',
+    MEUS_CHAMADOS: '/meus',
   },
-
 } as const;

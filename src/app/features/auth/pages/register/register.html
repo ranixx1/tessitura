@@ -1,75 +1,37 @@
 <div class="register-page">
   <app-card class="register-card">
     <div class="register-header">
-      <h1>Criar sua conta</h1>
-      <p>Preencha os dados abaixo para começar.</p>
+      <span class="register-eyebrow">Tessitura</span>
+
     </div>
 
     @if (errorMessage) {
-      <app-alert
-        type="error"
-        [message]="errorMessage"
-      />
+    <app-alert type="error" [message]="errorMessage" />
     }
 
     @if (successMessage) {
-      <app-alert
-        type="success"
-        [message]="successMessage"
-      />
+    <app-alert type="success" [message]="successMessage" />
     }
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-      <app-input
-        label="Nome"
-        type="text"
-        formControlName="name"
-        placeholder="Digite seu nome completo"
-      />
+      <app-input label="Nome" type="text" formControlName="name" placeholder="Digite seu nome completo" />
 
-      <app-input
-        label="Data de nascimento"
-        type="date"
-        formControlName="birthDate"
-      />
+      <app-input label="Data de nascimento" type="date" formControlName="birthDate" />
 
-      <app-input
-        label="Username"
-        type="text"
-        formControlName="username"
-        placeholder="Escolha seu username"
-      />
+      <app-input label="Username" type="text" formControlName="username" placeholder="Escolha seu username" />
 
-      <app-input
-        label="Telefone"
-        type="tel"
-        formControlName="phoneNumber"
-        placeholder="Digite seu telefone"
-      />
+      <app-input label="Telefone" type="tel" formControlName="phoneNumber" placeholder="Digite seu telefone" />
 
-      <app-input
-        label="E-mail"
-        type="email"
-        formControlName="email"
-        placeholder="Digite seu e-mail"
-      />
+      <app-input label="E-mail" type="email" formControlName="email" placeholder="Digite seu e-mail" />
 
-      <app-input
-        label="Senha"
-        type="password"
-        formControlName="password"
-        placeholder="Digite sua senha"
-      />
+      <app-input label="Senha" type="password" formControlName="password" placeholder="Digite sua senha" />
 
-      <app-button
-        type="submit"
-        [disabled]="registerForm.invalid || loading"
-      >
+      <app-button type="submit" [disabled]="registerForm.invalid || loading">
         @if (loading) {
-          <app-loading />
+        <app-loading />
         } @else {
-          Criar conta
+        Criar conta
         }
       </app-button>
     </form>

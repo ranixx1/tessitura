@@ -2,11 +2,7 @@
 
   <header class="novo-chamado-header">
 
-    <button
-      type="button"
-      class="back-button"
-      (click)="voltar()"
-    >
+    <button type="button" class="back-button" (click)="voltar()">
       ← Voltar
     </button>
 
@@ -21,182 +17,117 @@
 
   @if (loading) {
 
-    <div class="loading-state">
-      Carregando informações...
-    </div>
+  <div class="loading-state">
+    Carregando informações...
+  </div>
 
   } @else {
 
-    @if (errorMessage) {
+  @if (errorMessage) {
 
-      <app-alert
-        type="error"
-        [message]="errorMessage"
-      />
+  <app-alert type="error" [message]="errorMessage" />
 
-    }
+  }
 
-    @if (successMessage) {
+  @if (successMessage) {
 
-      <app-alert
-        type="success"
-        [message]="successMessage"
-      />
+  <app-alert type="success" [message]="successMessage" />
 
-    }
+  }
 
-    <app-card class="chamado-form-card">
+  <app-card class="chamado-form-card">
 
-      <form
-        [formGroup]="form"
-        (ngSubmit)="abrirChamado()"
-      >
+    <form [formGroup]="form" (ngSubmit)="abrirChamado()">
 
-        <!-- INFORMAÇÕES -->
+      <!-- INFORMAÇÕES -->
 
-        <section class="form-section">
+      <section class="form-section">
 
-          <div class="section-header">
+        <div class="section-header">
 
-            <h2>Informações do chamado</h2>
+          <h2>Informações do chamado</h2>
 
-            <p>
-              Informe o problema ou solicitação.
-            </p>
-
-          </div>
-
-
-          <app-input
-            label="Título"
-            id="titulo"
-            formControlName="titulo"
-            placeholder="Ex.: Não consigo acessar o sistema"
-            [error]="
-              form.controls.titulo.touched && form.controls.titulo.invalid
-                ? 'Informe um título válido.'
-                : ''
-            "
-          />
-
-
-          <app-input
-            label="Descrição"
-            type="textarea"
-            [rows]="7"
-            id="descricao"
-            formControlName="descricao"
-            placeholder="Descreva detalhadamente o problema..."
-            [error]="
-              form.controls.descricao.touched && form.controls.descricao.invalid
-                ? 'A descrição deve possuir pelo menos 10 caracteres.'
-                : ''
-            "
-          />
-
-        </section>
-
-
-        <!-- CLASSIFICAÇÃO -->
-
-        <section class="form-section">
-
-          <div class="section-header">
-
-            <h2>Classificação</h2>
-
-            <p>
-              Classifique o chamado para direcioná-lo corretamente.
-            </p>
-
-          </div>
-
-
-          @if (subtopicos.length > 0) {
-
-            <app-select
-              label="Subtópico"
-              id="subtopico"
-              formControlName="subtopicoId"
-              placeholder="Selecione um subtópico"
-              [options]="subtopicoOptions"
-            />
-
-
-            <app-input
-              label="Outro subtópico"
-              id="outroSubtopico"
-              formControlName="outroSubtopico"
-              placeholder="Caso não encontre o subtópico desejado"
-            />
-
-          }
-
-
-          <div class="form-row">
-
-            <app-select
-              label="Prioridade"
-              id="prioridade"
-              formControlName="prioridade"
-              [options]="prioridades"
-              [error]="
-                form.controls.prioridade.touched && form.controls.prioridade.invalid
-                  ? 'Selecione uma prioridade.'
-                  : ''
-              "
-            />
-
-            <app-select
-              label="Escopo"
-              id="escopo"
-              formControlName="escopo"
-              [options]="escopos"
-              [error]="
-                form.controls.escopo.touched && form.controls.escopo.invalid
-                  ? 'Selecione o escopo.'
-                  : ''
-              "
-            />
-
-          </div>
-
-        </section>
-
-
-        <!-- AÇÕES -->
-
-        <div class="form-actions">
-
-          <app-button
-            type="button"
-            variant="secondary"
-            [fullWidth]="false"
-            [disabled]="submitting"
-            (click)="voltar()"
-          >
-            Cancelar
-          </app-button>
-
-
-          <app-button
-            type="submit"
-            [fullWidth]="false"
-            [disabled]="form.invalid"
-            [loading]="submitting"
-          >
-            @if (submitting) {
-              Abrindo chamado...
-            } @else {
-              Abrir chamado
-            }
-          </app-button>
+          <p>
+            Informe o problema ou solicitação.
+          </p>
 
         </div>
 
-      </form>
 
-    </app-card>
+        <app-input label="Título" id="titulo" formControlName="titulo" placeholder="Ex.: Não consigo acessar o sistema"
+          [error]="
+              form.controls.titulo.touched && form.controls.titulo.invalid
+                ? 'Informe um título válido.'
+                : ''
+            " />
+
+
+        <app-input label="Descrição" type="textarea" [rows]="7" id="descricao" formControlName="descricao"
+          placeholder="Descreva detalhadamente o problema..." [error]="
+              form.controls.descricao.touched && form.controls.descricao.invalid
+                ? 'A descrição deve possuir pelo menos 10 caracteres.'
+                : ''
+            " />
+
+      </section>
+
+
+
+      <section class="form-section">
+
+        @if (subtopicos.length > 0) {
+
+        <app-select label="Subtópico" id="subtopico" formControlName="subtopicoId" placeholder="Selecione um subtópico"
+          [options]="subtopicoOptions" />
+
+
+        <app-input label="Outro subtópico" id="outroSubtopico" formControlName="outroSubtopico"
+          placeholder="Caso não encontre o subtópico desejado" />
+
+        }
+
+
+        <div class="form-row">
+
+          <app-select label="Prioridade" id="prioridade" formControlName="prioridade" [options]="prioridades" [error]="
+                form.controls.prioridade.touched && form.controls.prioridade.invalid
+                  ? 'Selecione uma prioridade.'
+                  : ''
+              " />
+
+          <app-select label="Escopo" id="escopo" formControlName="escopo" [options]="escopos" [error]="
+                form.controls.escopo.touched && form.controls.escopo.invalid
+                  ? 'Selecione o escopo.'
+                  : ''
+              " />
+
+        </div>
+
+      </section>
+
+
+      <!-- AÇÕES -->
+
+      <div class="form-actions">
+
+        <app-button type="button" variant="secondary" [fullWidth]="false" [disabled]="submitting" (click)="voltar()">
+          Cancelar
+        </app-button>
+
+
+        <app-button type="submit" [fullWidth]="false" [disabled]="form.invalid" [loading]="submitting">
+          @if (submitting) {
+          Abrindo chamado...
+          } @else {
+          Abrir chamado
+          }
+        </app-button>
+
+      </div>
+
+    </form>
+
+  </app-card>
 
   }
 
