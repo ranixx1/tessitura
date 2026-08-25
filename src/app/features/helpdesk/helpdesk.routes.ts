@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from '../../core/guards/auth-guard';
 
 export const HELPDESK_ROUTES: Routes = [
+
   {
     path: '',
     canActivate: [authGuard],
@@ -29,4 +30,14 @@ export const HELPDESK_ROUTES: Routes = [
         (m) => m.NovoChamadoComponent,
       ),
   },
+
+  {
+    path: ':id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/chamado-detail/chamado-detail').then(
+        (m) => m.ChamadoDetailComponent,
+      ),
+  },
+
 ];

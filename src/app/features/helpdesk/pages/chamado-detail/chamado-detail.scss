@@ -1,0 +1,126 @@
+.detail-page {
+  padding: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+  hr {
+    border: none;
+    border-top: 1px solid #e4e7ec;
+    margin: 32px 0;
+  }
+}
+
+.btn-voltar {
+  background: none;
+  border: none;
+  color: #667085;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+  
+  &:hover { color: #172033; }
+}
+
+.chamado-header {
+  margin-bottom: 24px;
+
+  .codigo {
+    color: #667085;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  h1 {
+    margin: 8px 0 0;
+    color: #172033;
+    font-size: 24px;
+  }
+}
+
+.info-grid {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    small { color: #667085; font-size: 13px; }
+    strong { color: #101828; font-size: 15px; }
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f2f4f7;
+  color: #344054;
+
+  &.status-aberto { background: #eff8ff; color: #175cd3; }
+}
+
+.secao-descricao p {
+  color: #475467;
+  line-height: 1.6;
+}
+
+.comentario-card {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+
+  strong { display: block; color: #344054; margin-bottom: 4px; }
+  p { margin: 0; color: #475467; font-style: italic; }
+}
+
+.adicionar-comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    resize: vertical;
+  }
+
+  button {
+    align-self: flex-start;
+    padding: 8px 16px;
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+}
+
+.botoes-status {
+  display: flex;
+  gap: 12px;
+
+  button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #d0d5dd;
+    background: white;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover { background: #f9fafb; }
+  }
+}
