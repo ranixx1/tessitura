@@ -34,38 +34,20 @@ export class ChamadosComponent implements OnInit {
     inject(ChangeDetectorRef);
 
 
-  /* ================================
-     ESTADO
-  ================================= */
-
   chamados: Chamado[] = [];
 
   loading = true;
 
   errorMessage = '';
 
-
-  /* ================================
-     FILTROS
-  ================================= */
-
   filtroStatus = '';
 
   filtroPrioridade = '';
-
-
-  /* ================================
-     CICLO DE VIDA
-  ================================= */
 
   ngOnInit(): void {
     this.carregarChamados();
   }
 
-
-  /* ================================
-     CARREGAR CHAMADOS
-  ================================= */
 
   carregarChamados(): void {
 
@@ -111,20 +93,7 @@ export class ChamadosComponent implements OnInit {
       });
   }
 
-
-  /* ================================
-     FILTROS
-  ================================= */
-
   aplicarFiltros(): void {
-    /*
-     * Os filtros são aplicados através
-     * do getter chamadosFiltrados.
-     *
-     * Este método existe para que o
-     * HTML possa reagir ao evento
-     * (change) dos selects.
-     */
     this.cdr.detectChanges();
   }
 
@@ -157,11 +126,6 @@ export class ChamadosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-
-  /* ================================
-     NAVEGAÇÃO
-  ================================= */
-
   abrirChamado(
     chamado: Chamado,
   ): void {
@@ -174,20 +138,10 @@ export class ChamadosComponent implements OnInit {
 
 
   novoChamado(): void {
-
-    /*
-     * O fluxo de criação começa
-     * pela seleção do portal.
-     */
     this.router.navigate([
       '/portal',
     ]);
   }
-
-
-  /* ================================
-     STATUS
-  ================================= */
 
   formatarStatus(
     status: string,
@@ -235,11 +189,6 @@ export class ChamadosComponent implements OnInit {
         return '';
     }
   }
-
-
-  /* ================================
-     PRIORIDADE
-  ================================= */
 
   formatarPrioridade(
     prioridade: string,

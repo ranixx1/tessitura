@@ -1,0 +1,79 @@
+<div class="detail-page" *ngIf="!loading && chamado as dados">
+    <button class="btn-voltar" (click)="voltar()">← Voltar</button>
+
+    <header class="chamado-header">
+        <span class="codigo">{{ dados.codigo }}</span>
+        <h1>{{ dados.titulo }}</h1>
+    </header>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <small>Status</small>
+            <span class="status-badge" [ngClass]="'status-' + (dados.status | lowercase)">
+                {{ dados.status }}
+            </span>
+        </div>
+        <div class="info-item">
+            <small>Prioridade</small>
+            <strong>{{ dados.prioridade }}</strong>
+        </div>
+        <div class="info-item">
+            <small>Portal</small>
+            <strong>{{ dados.portal.nome || 'Não informado' }}</strong>
+        </div>
+        <div class="info-item">
+            <small>Categoria</small>
+            <strong>{{ dados.categoria?.nome || 'Não informado' }}</strong>
+        </div>
+        <div class="info-item">
+            <small>Subtópico</small>
+            <strong>{{ dados.subtopico?.nome || 'Não informado' }}</strong>
+        </div>
+    </div>
+
+    <hr />
+
+    <section class="secao-descricao">
+        <h2>Descrição</h2>
+        <p>{{ dados.descricao }}</p>
+    </section>
+
+    <hr />
+
+    <section class="secao-comentarios">
+        <h2>Comentários</h2>
+
+        <div class="lista-comentarios">
+            <div class="comentario-card" *ngFor="let comentario of dados.comentarios">
+                <strong>{{ comentario.username }} <small style="color: #98a2b3; margin-left: 8px;">{{
+                        comentario.dataHoraCriacao | date:'dd/MM/yyyy HH:mm' }}</small></strong>
+                <p>"{{ comentario.mensagem }}"</p>
+            </div>
+
+            <div *ngIf="!dados.comentarios.length" class="empty-state"> Nenhum comentário adicionado ainda.
+            </div>
+        </div>
+
+        <div class="adicionar-comentario">
+            <textarea [(ngModel)]="novoComentario" placeholder="Escreva seu comentário..." rows="3">
+      </textarea>
+            <button (click)="adicionarComentario()" [disabled]="!novoComentario.trim()">
+                Comentar
+            </button>
+        </div>
+    </section>
+
+    <hr />
+
+    <section class="secao-acoes">
+        <h2>Alterar status</h2>
+        <div class="botoes-status">
+            <button class="btn-progresso" (click)="alterarStatus('EM_PROGRESSO')">Em progresso</button>
+            <button class="btn-aguardando" (click)="alterarStatus('AGUARDANDO_USUARIO')">Aguardando usuário</button>
+            <button class="btn-fechar" (click)="alterarStatus('FECHADO')">Fechar</button>
+        </div>
+    </section>
+</div>
+
+<div class="loading-state" *ngIf="loading">Carregando detalhes do chamado...</div>
+<div class="error-state" *ngIf="error">Ocorreu um erro ao carregar este chamado.</div>
