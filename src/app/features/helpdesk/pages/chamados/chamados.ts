@@ -33,6 +33,14 @@ export class ChamadosComponent implements OnInit {
   private readonly cdr =
     inject(ChangeDetectorRef);
 
+  private readonly statusOrder: Record<string, number> = {
+    ABERTO: 0,
+    EM_PROGRESSO: 1,
+    AGUARDANDO_USUARIO: 2,
+    FECHADO: 3,
+  };
+
+
 
   chamados: Chamado[] = [];
 
@@ -97,26 +105,6 @@ export class ChamadosComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-
-  get chamadosFiltrados(): Chamado[] {
-
-    return this.chamados.filter(
-      (chamado) => {
-
-        const statusOk =
-          !this.filtroStatus ||
-          chamado.status === this.filtroStatus;
-
-        const prioridadeOk =
-          !this.filtroPrioridade ||
-          chamado.prioridade === this.filtroPrioridade;
-
-        return statusOk && prioridadeOk;
-      },
-    );
-  }
-
-
   limparFiltros(): void {
 
     this.filtroStatus = '';
@@ -131,7 +119,7 @@ export class ChamadosComponent implements OnInit {
   ): void {
 
     this.router.navigate([
-      '/helpdesk',
+      '/helpdesk/chamados',
       chamado.id,
     ]);
   }
@@ -165,6 +153,30 @@ export class ChamadosComponent implements OnInit {
         return status;
     }
   }
+
+  get chamadosFiltrados(): Chamado[] {
+
+    return this.chamados
+      .filter((chamado) => {
+
+        const statusOk =
+          !this.filtroStatus ||
+          chamado.status === this.filtroStatus;
+
+        const prioridadeOk =
+          !this.filtroPrioridade ||
+          chamado.prioridade === this.filtroPrioridade;
+
+        return statusOk && prioridadeOk;
+      })
+      .sort((a, b) => {
+        const diff =
+          (this.statusOrder[a.status] ?? 99) -
+          (this.statusOrder[b.status] ?? 99);
+        return diff;
+      });
+  }
+
 
 
   getStatusClass(

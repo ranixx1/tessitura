@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 import { Chamado } from '../../helpdesk/model/chamado';
+import { ChamadoHistorico } from '../../helpdesk/model/chamadoHistorico';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class ChamadoService {
 
   constructor(
     private readonly http: HttpClient,
-  ) {}
+  ) { }
 
   listarTodos(): Observable<Chamado[]> {
     return this.http.get<Chamado[]>(
@@ -27,6 +28,12 @@ export class ChamadoService {
   listarMeus(): Observable<Chamado[]> {
     return this.http.get<Chamado[]>(
       `${this.apiUrl}/meus`,
+    );
+  }
+  
+  listarHistorico(id: number): Observable<ChamadoHistorico[]> {
+    return this.http.get<ChamadoHistorico[]>(
+      `${this.apiUrl}/${id}/historico`
     );
   }
 
@@ -51,12 +58,11 @@ export class ChamadoService {
 
   alterarStatus(
     id: number,
-    status: string,
+    status: Chamado['status'],
   ): Observable<Chamado> {
-
     return this.http.put<Chamado>(
       `${this.apiUrl}/${id}/status`,
-      status,
+      { status },
     );
   }
 
