@@ -141,7 +141,13 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [x] Define border radius
 * [x] Define shadows
 * [ ] Define breakpoints
-* [ ] Define SCSS mixins
+* [x] Define SCSS mixins
+
+### Branding
+
+* [x] Brand mark (icon + wordmark lockup)
+* [x] Favicon (multi-resolution `.ico`, app icon sizes)
+* [ ] Full brand guidelines (spacing, min size, usage rules)
 
 ### Components
 
@@ -176,7 +182,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [ ] Screen reader compatibility
 * [ ] Color contrast review
 
-**Status:** ⚪ Not started
+**Status:** 🟡 Started
 
 ---
 
@@ -186,42 +192,42 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Services
 
-* [ ] Refactor `AuthService`
-* [ ] Login
-* [ ] Register
-* [ ] Forgot password
-* [ ] Reset password
-* [ ] Logout
-* [ ] Session management
+* [x] Refactor `AuthService`
+* [x] Login
+* [x] Register
+* [x] Forgot password
+* [x] Reset password
+* [x] Logout
+* [x] Session management
 
 ### Login
 
 * [x] Build Login page
-* [ ] Reactive Forms
+* [x] Reactive Forms
 * [ ] Username validation
-* [ ] Password validation
-* [ ] Loading state
-* [ ] Error state
-* [ ] JWT storage
-* [ ] Redirect after authentication
+* [x] Password validation
+* [x] Loading state
+* [x] Error state
+* [x] JWT storage
+* [x] Redirect after authentication
 
 ### Register
 
-* [ ] Build Register page
-* [ ] Reactive Forms
-* [ ] Field validation
-* [ ] Password validation
-* [ ] Loading state
-* [ ] Error handling
-* [ ] Successful registration flow
+* [x] Build Register page
+* [x] Reactive Forms
+* [x] Field validation
+* [x] Password validation
+* [x] Loading state
+* [x] Error handling
+* [x] Successful registration flow
 
 ### Password Recovery
 
-* [ ] Forgot password page
-* [ ] Reset password page
-* [ ] Token handling
-* [ ] Success feedback
-* [ ] Error handling
+* [x] Forgot password page
+* [x] Reset password page
+* [x] Token handling
+* [x] Success feedback
+* [x] Error handling
 
 ### Authentication Flow
 
@@ -229,7 +235,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [ ] Redirect unauthenticated users
 * [ ] Handle expired JWT
 * [ ] Handle unauthorized requests
-* [ ] Implement logout
+* [x] Implement logout
 
 **Status:** 🟡 Partially started
 
@@ -339,16 +345,16 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 ### Tickets
 
-* [ ] Ticket listing
-* [ ] Search
-* [ ] Filters
-* [ ] Ticket details
-* [ ] Create ticket
-* [ ] Update ticket
-* [ ] Ticket status
-* [ ] Ticket priority
-* [ ] Ticket assignment
-* [ ] Ticket comments
+* [x] Ticket listing
+* [x] Search
+* [x] Filters
+* [x] Ticket details
+* [x] Create ticket
+* [x] Update ticket
+* [x] Ticket status
+* [x] Ticket priority
+* [x] Ticket assignment
+* [x] Ticket comments
 
 ### Knowledge Base ( I'll build a new service for that )
 
@@ -365,7 +371,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [ ] Team members
 * [ ] Ticket assignment
 
-**Status:** ⚪ Not started
+**Status:** 🟡 Started
 
 ---
 
@@ -388,7 +394,7 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 * [ ] Review queue
 * [ ] Submission details
 * [ ] Document viewer
-* [ ] OCR results 
+* [ ] OCR results
 * [ ] Approve submission
 * [ ] Reject submission
 * [ ] Request resubmission
@@ -507,13 +513,13 @@ Reusable UI components, directives, pipes, utilities and design-system resources
 
 | Phase              | Status         |
 | ------------------ | -------------- |
-| Foundation         | 🟡 In progress |
-| Design System      | ⚪ Not started  |
-| Authentication     | 🟡 Started     |
-| Application Layout | ⚪ Not started  |
-| User Portal        | ⚪ Not started  |
+| Foundation         | 🟢 In progress |
+| Design System      | 🟡 Started     |
+| Authentication     | 🟢 Finished    |
+| Application Layout | 🟢 In progress  |
+| User Portal        | 🟢 In progress  |
 | Administration     | ⚪ Not started  |
-| Help Desk          | ⚪ Not started  |
+| Help Desk          | 🟢 In progress  |
 | KYC                | ⚪ Not started  |
 | Analytics          | ⚪ Not started  |
 | Security & Quality | ⚪ Not started  |
