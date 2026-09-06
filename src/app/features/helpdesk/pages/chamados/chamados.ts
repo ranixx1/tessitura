@@ -39,6 +39,9 @@ export class ChamadosComponent implements OnInit {
     AGUARDANDO_USUARIO: 2,
     FECHADO: 3,
   };
+  readonly statusDisponiveis = [
+    'ABERTO', 'EM_PROGRESSO', 'AGUARDANDO_USUARIO', 'FECHADO',
+  ];
 
 
 
@@ -48,9 +51,11 @@ export class ChamadosComponent implements OnInit {
 
   errorMessage = '';
 
-  filtroStatus = '';
-
+  filtrosStatus: string[] = [];
   filtroPrioridade = '';
+  filtroPortal = '';
+  filtroCategoria = '';
+  filtroTexto = '';
 
   ngOnInit(): void {
     this.carregarChamados();
@@ -106,11 +111,11 @@ export class ChamadosComponent implements OnInit {
   }
 
   limparFiltros(): void {
-
-    this.filtroStatus = '';
-
+    this.filtrosStatus = [];
     this.filtroPrioridade = '';
-
+    this.filtroPortal = '';
+    this.filtroCategoria = '';
+    this.filtroTexto = '';
     this.cdr.detectChanges();
   }
 
@@ -154,27 +159,60 @@ export class ChamadosComponent implements OnInit {
     }
   }
 
-  get chamadosFiltrados(): Chamado[] {
+  toggleStatus(status: string): void {
+    const idx = this.filtrosStatus.indexOf(status);
+    if (idx === -1) {
+      this.filtrosStatus.push(status);
+    } else {
+      this.filtrosStatus.splice(idx, 1);
+    }
+    this.aplicarFiltros();
+  }
 
+  get portaisDisponiveis(): string[] {
+    const nomes = this.chamados
+      .map((c) => c.portal?.nome)
+      .filter((nome): nome is string => !!nome);
+    return Array.from(new Set(nomes)).sort();
+  }
+
+  get categoriasDisponiveis(): string[] {
+    const nomes = this.chamados
+      .map((c) => c.categoria?.nome)
+      .filter((nome): nome is string => !!nome);
+    return Array.from(new Set(nomes)).sort();
+  }
+
+  get chamadosFiltrados(): Chamado[] {
     return this.chamados
       .filter((chamado) => {
 
         const statusOk =
-          !this.filtroStatus ||
-          chamado.status === this.filtroStatus;
+          this.filtrosStatus.length === 0 ||
+          this.filtrosStatus.includes(chamado.status);
 
         const prioridadeOk =
           !this.filtroPrioridade ||
           chamado.prioridade === this.filtroPrioridade;
 
-        return statusOk && prioridadeOk;
+        const portalOk =
+          !this.filtroPortal ||
+          chamado.portal?.nome === this.filtroPortal;
+
+        const categoriaOk =
+          !this.filtroCategoria ||
+          chamado.categoria?.nome === this.filtroCategoria;
+
+        const textoOk =
+          !this.filtroTexto ||
+          chamado.titulo.toLowerCase().includes(this.filtroTexto.toLowerCase()) ||
+          chamado.descricao.toLowerCase().includes(this.filtroTexto.toLowerCase());
+
+        return statusOk && prioridadeOk && portalOk && categoriaOk && textoOk;
       })
-      .sort((a, b) => {
-        const diff =
-          (this.statusOrder[a.status] ?? 99) -
-          (this.statusOrder[b.status] ?? 99);
-        return diff;
-      });
+      .sort((a, b) =>
+        (this.statusOrder[a.status] ?? 99) - (this.statusOrder[b.status] ?? 99),
+      );
   }
 
 
