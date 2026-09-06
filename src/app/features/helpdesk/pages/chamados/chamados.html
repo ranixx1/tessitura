@@ -18,37 +18,17 @@
 
   <section class="chamados-filters">
 
-    <div class="filter-group">
-
-      <label for="status">
-        Status
-      </label>
-
-      <select id="status" [(ngModel)]="filtroStatus" (change)="aplicarFiltros()">
-        <option value="">
-          Todos
-        </option>
-
-        <option value="ABERTO">
-          Aberto
-        </option>
-
-        <option value="EM_PROGRESSO">
-          Em progresso
-        </option>
-
-        <option value="AGUARDANDO_USUARIO">
-          Aguardando usuário
-        </option>
-
-        <option value="FECHADO">
-          Fechado
-        </option>
-
-      </select>
-
+    <div class="filter-group filter-group--status">
+      <label>Status</label>
+      <div class="status-chips">
+        @for (status of statusDisponiveis; track status) {
+        <label class="status-chip" [class.active]="filtrosStatus.includes(status)">
+          <input type="checkbox" [checked]="filtrosStatus.includes(status)" (change)="toggleStatus(status)">
+          {{ formatarStatus(status) }}
+        </label>
+        }
+      </div>
     </div>
-
 
     <div class="filter-group">
 
@@ -75,6 +55,31 @@
 
       </select>
 
+    </div>
+    <div class="filter-group">
+      <label for="portal">Portal</label>
+      <select id="portal" [(ngModel)]="filtroPortal" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        @for (portal of portaisDisponiveis; track portal) {
+        <option [value]="portal">{{ portal }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="categoria">Categoria</label>
+      <select id="categoria" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
+        <option value="">Todas</option>
+        @for (categoria of categoriasDisponiveis; track categoria) {
+        <option [value]="categoria">{{ categoria }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="busca">Buscar</label>
+      <input id="busca" type="text" [(ngModel)]="filtroTexto" (input)="aplicarFiltros()"
+        placeholder="Título ou descrição...">
     </div>
 
   </section>

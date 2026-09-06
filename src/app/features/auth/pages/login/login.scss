@@ -10,6 +10,13 @@
 
 .login-header {
   @extend %auth-header;
+  display: flex;
+  justify-content: center;
+}
+
+.login-logo {
+  height: 40px;
+  width: auto;
 }
 
 .login-eyebrow {

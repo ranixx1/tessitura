@@ -1,30 +1,17 @@
 <div class="login-page">
   <app-card class="login-card">
     <div class="login-header">
-      <span class="login-eyebrow">Tessitura</span>
-    </div>
+<img src="/svg/logo-lockup.svg" alt="Tessitura" class="login-logo">    </div>
 
     @if (errorMessage) {
-      <app-alert
-        type="error"
-        [message]="errorMessage"
-      />
+    <app-alert type="error" [message]="errorMessage" />
     }
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <app-input
-        label="Username ou e-mail"
-        type="text"
-        formControlName="login"
-        placeholder="Digite seu username ou e-mail"
-      />
+      <app-input label="Username ou e-mail" type="text" formControlName="login"
+        placeholder="Digite seu username ou e-mail" />
 
-      <app-input
-        label="Senha"
-        type="password"
-        formControlName="password"
-        placeholder="Digite sua senha"
-      />
+      <app-input label="Senha" type="password" formControlName="password" placeholder="Digite sua senha" />
 
       <div class="login-options">
         <a routerLink="/forgot-password">
@@ -32,14 +19,11 @@
         </a>
       </div>
 
-      <app-button
-        type="submit"
-        [disabled]="loginForm.invalid || loading"
-      >
+      <app-button type="submit" [disabled]="loginForm.invalid || loading">
         @if (loading) {
-          <app-loading />
+        <app-loading />
         } @else {
-          Entrar
+        Entrar
         }
       </app-button>
     </form>

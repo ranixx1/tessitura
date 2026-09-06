@@ -1,8 +1,12 @@
 <div class="register-page">
   <app-card class="register-card">
     <div class="register-header">
-      <span class="register-eyebrow">Tessitura</span>
+      <img src="/svg/logo-lockup.svg" alt="Tessitura" class="register-logo">
+    </div>
 
+    <div class="register-progress">
+      <span class="progress-step" [class.active]="step === 1">1. Dados pessoais</span>
+      <span class="progress-step" [class.active]="step === 2">2. Acesso</span>
     </div>
 
     @if (errorMessage) {
@@ -15,33 +19,46 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
+      @if (step === 1) {
       <app-input label="Nome" type="text" formControlName="name" placeholder="Digite seu nome completo" />
-
       <app-input label="Data de nascimento" type="date" formControlName="birthDate" />
-
-      <app-input label="Username" type="text" formControlName="username" placeholder="Escolha seu username" />
-
       <app-input label="Telefone" type="tel" formControlName="phoneNumber" placeholder="Digite seu telefone" />
 
-      <app-input label="E-mail" type="email" formControlName="email" placeholder="Digite seu e-mail" />
+      <app-button type="button" (click)="proximoStep()">
+        Próximo
+      </app-button>
+      }
 
+      @if (step === 2) {
+      <app-input label="Username" type="text" formControlName="username" placeholder="Escolha seu username" />
+      <app-input label="E-mail" type="email" formControlName="email" placeholder="Digite seu e-mail" />
       <app-input label="Senha" type="password" formControlName="password" placeholder="Digite sua senha" />
 
-      <app-button type="submit" [disabled]="registerForm.invalid || loading">
-        @if (loading) {
-        <app-loading />
-        } @else {
-        Criar conta
-        }
-      </app-button>
+      <ul class="password-requirements">
+        <li [class.met]="passwordMinLength">
+          <span>{{ passwordMinLength ? '✓' : '○' }}</span>
+          Mínimo de 8 caracteres
+        </li>
+      </ul>
+      <div class="step-actions">
+        <app-button type="button" (click)="voltarStep()">
+          Voltar
+        </app-button>
+
+        <app-button type="submit" [disabled]="registerForm.invalid || loading">
+          @if (loading) {
+          <app-loading />
+          } @else {
+          Criar conta
+          }
+        </app-button>
+      </div>
+      }
     </form>
 
     <div class="login-link">
       <span>Já possui uma conta?</span>
-
-      <a routerLink="/login">
-        Entrar
-      </a>
+      <a routerLink="/login">Entrar</a>
     </div>
   </app-card>
 </div>
