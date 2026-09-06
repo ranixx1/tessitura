@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
 
 import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../models/register-request';
@@ -33,16 +35,20 @@ import { AlertComponent } from '../../../../shared/components/alert/alert';
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
   loading = false;
 
+  step = 1;
+  private readonly step1Fields = ['name', 'birthDate', 'phoneNumber'];
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -50,8 +56,30 @@ export class RegisterComponent {
       username: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  proximoStep(): void {
+
+    const step1Valid = this.step1Fields.every((field) => {
+      const control = this.registerForm.get(field);
+      control?.markAsTouched();
+      return control?.valid;
+    });
+
+    if (!step1Valid) {
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.step = 2;
+    this.cdr.detectChanges();
+  }
+
+  voltarStep(): void {
+    this.step = 1;
+    this.cdr.detectChanges();
   }
 
   onSubmit(): void {
@@ -87,6 +115,17 @@ export class RegisterComponent {
         this.errorMessage =
           'Não foi possível criar sua conta. Tente novamente.';
       },
+    });
+  }
+
+  get passwordMinLength(): boolean {
+    const value = this.registerForm.get('password')?.value ?? '';
+    return value.length >= 8;
+  }
+
+  ngOnInit(): void {
+    this.registerForm.get('password')?.valueChanges.subscribe(() => {
+      this.cdr.detectChanges();
     });
   }
 }

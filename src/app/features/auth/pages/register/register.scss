@@ -10,10 +10,64 @@
 
 .register-header {
   @extend %auth-header;
+  display: flex;
+  justify-content: center;
+}
+
+.register-logo {
+  height: 40px;
+  width: auto;
+}
+
+.register-progress {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.progress-step {
+  color: #98a2b3;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+
+  &.active {
+    color: #1d4ed8;
+  }
+}
+
+.step-actions {
+  display: flex;
+  gap: 0.75rem;
+
+  app-button {
+    flex: 1;
+  }
 }
 
 form {
   @extend %auth-form;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &:not(:first-child) {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border, #e4e7ec);
+  }
+}
+
+.form-section-title {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .login-link {
@@ -29,6 +83,21 @@ form {
   }
 }
 
-.register-eyebrow {
-  @extend %auth-eyebrow;
+.password-requirements {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    color: #98a2b3;
+    font-size: 12.5px;
+
+    &.met {
+      color: #027a48;
+    }
+  }
 }
