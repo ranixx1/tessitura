@@ -1,0 +1,52 @@
+<div class="kyc-page">
+  <div class="kyc-header">
+    <div class="kyc-header-content">
+      <h1>Análise de Documentos</h1>
+      <p>Gerencie e avalie documentos pendentes de revisão manual.</p>
+    </div>
+  </div>
+
+  <div class="analyst-layout">
+    <div class="kyc-grid list-column">
+      <div class="empty-state" *ngIf="pendingReviews().length === 0">
+        <h2>Fila limpa</h2>
+        <p>Não há documentos pendentes para análise no momento.</p>
+      </div>
+
+      <div class="kyc-card" 
+           *ngFor="let sub of pendingReviews()" 
+           [class.active-card]="selectedSubmission()?.id === sub.id"
+           (click)="viewDetails(sub)">
+        <div class="kyc-card-header">
+          <span class="kyc-code">{{ sub.documentType }}</span>
+          <span class="kyc-status status-manual_review">Aguardando</span>
+        </div>
+        <div class="kyc-card-content">
+          <h2>{{ sub.username }}</h2>
+          <p class="neutral-text">{{ sub.createdAt | date:'short' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-column" *ngIf="selectedSubmission()">
+      <div class="details-panel">
+        <h2>Detalhes da Avaliação</h2>
+        
+        <div class="document-viewer">
+          <img *ngIf="documentUrl()" [src]="documentUrl()" alt="Documento do usuário">
+        </div>
+
+        <div class="decision-actions">
+          <div class="filter-group rejection-input">
+            <input type="text" [(ngModel)]="rejectionReason" placeholder="Motivo da rejeição (opcional para aprovação)">
+          </div>
+          
+          <div class="action-buttons">
+            <button class="action-button approve-btn" (click)="decide('APPROVE')">Aprovar</button>
+            <button class="action-button reject-btn" [disabled]="!rejectionReason()" (click)="decide('REJECT')">Rejeitar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

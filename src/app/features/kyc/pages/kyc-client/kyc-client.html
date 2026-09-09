@@ -1,0 +1,46 @@
+<div class="kyc-page">
+  <div class="kyc-header">
+    <div class="kyc-header-content">
+      <h1>Envio de Documentos KYC</h1>
+      <p>Envie e acompanhe o status de verificação dos seus documentos.</p>
+    </div>
+  </div>
+
+  <div class="kyc-filters">
+    <div class="filter-group">
+      <label>Tipo de Documento</label>
+      <select [(ngModel)]="selectedType">
+        <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+    
+    <div class="filter-group" style="grid-column: span 2;">
+      <label>Arquivo</label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*,.pdf">
+    </div>
+
+    <button class="action-button" (click)="onSubmit()" [disabled]="!selectedFile">
+      Enviar Documento
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="mySubmissions().length === 0">
+    <h2>Nenhum documento enviado</h2>
+    <p>Você ainda não enviou nenhum documento para análise.</p>
+  </div>
+
+  <div class="kyc-grid" *ngIf="mySubmissions().length > 0">
+    <div class="kyc-card" *ngFor="let sub of mySubmissions()">
+      <div class="kyc-card-header">
+        <span class="kyc-code">{{ sub.documentType }}</span>
+        <span class="kyc-status" [ngClass]="'status-' + sub.status.toLowerCase()">
+          {{ sub.status }}
+        </span>
+      </div>
+      <div class="kyc-card-content">
+        <h2>Enviado em {{ sub.createdAt | date:'shortDate' }}</h2>
+        <p *ngIf="sub.rejectionReason">Motivo: {{ sub.rejectionReason }}</p>
+      </div>
+    </div>
+  </div>
+</div>
