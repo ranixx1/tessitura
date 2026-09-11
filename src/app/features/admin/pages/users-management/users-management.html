@@ -5,163 +5,169 @@
       <p>Gerencie contas, permissões e atividade de acesso.</p>
     </div>
 
-    <input
-      class="users-search"
-      type="text"
-      placeholder="Buscar por username ou e-mail..."
-      [(ngModel)]="filtroTexto"
-    >
+    <input class="users-search" type="text" placeholder="Buscar por username ou e-mail..." [(ngModel)]="filtroTexto">
   </header>
 
   @if (errorMessage) {
-    <app-alert type="error" [message]="errorMessage" />
+  <app-alert type="error" [message]="errorMessage" />
   }
 
   @if (loading) {
-    <app-loading />
+  <app-loading />
   } @else {
-    <app-card class="users-table-card">
-      <div class="table-responsive">
-        <table class="users-table">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>E-mail</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Último login</th>
-              <th>Criado em</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (usuario of usuariosFiltrados; track usuario.id) {
-              <tr>
-                <td>{{ usuario.username }}</td>
-                <td>{{ usuario.email }}</td>
-                <td>
-                  <span class="role-badge">{{ roleLabels[usuario.role] }}</span>
-                </td>
-                <td>
-                  <span class="status-badge" [class.active]="usuario.active">
-                    {{ usuario.active ? 'Ativo' : 'Inativo' }}
-                  </span>
-                </td>
-                <td>{{ usuario.lastLogin ? (usuario.lastLogin | date:'dd/MM/yyyy HH:mm') : 'Nunca acessou' }}</td>
-                <td>{{ usuario.createdAt | date:'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="detail-link" (click)="abrirDetalhe(usuario)">
-                    Ver detalhes
-                  </button>
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="7" class="empty-row">Nenhum usuário encontrado.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-    </app-card>
+  <app-card class="users-table-card">
+    <div class="table-responsive">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>E-mail</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Último login</th>
+            <th>Criado em</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (usuario of usuariosFiltrados; track usuario.id) {
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="table-avatar">
+                  {{ obterIniciais(usuario.username) }}
+                </div>
+                <div class="user-cell-info">
+                  <strong>{{ usuario.username }}</strong>
+                  <small>&#64;{{ usuario.username }}</small>
+                </div>
+              </div>
+            </td>
+            <td>{{ usuario.email }}</td>
+            <td>
+              <span class="role-badge">{{ roleLabels[usuario.role] }}</span>
+            </td>
+            <td>
+              <span class="status-badge" [class.active]="usuario.active">
+                {{ usuario.active ? 'Ativo' : 'Inativo' }}
+              </span>
+            </td>
+            <td>{{ usuario.lastLogin ? (usuario.lastLogin | date:'dd/MM/yyyy HH:mm') : 'Nunca acessou' }}</td>
+            <td>{{ usuario.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <button type="button" class="detail-link" (click)="abrirDetalhe(usuario)">
+                Ver detalhes
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="7" class="empty-row">Nenhum usuário encontrado.</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </app-card>
   }
 </div>
 
 @if (usuarioSelecionado || loadingDetalhe) {
-  <div class="drawer-overlay" (click)="fecharDetalhe()">
-    <aside class="drawer" (click)="$event.stopPropagation()">
+<div class="drawer-overlay" (click)="fecharDetalhe()">
+  <aside class="drawer" (click)="$event.stopPropagation()">
 
-      @if (loadingDetalhe) {
-        <app-loading />
-      } @else if (usuarioSelecionado) {
-        <header class="drawer-header">
-          <div>
-            <h2>{{ usuarioSelecionado.name }}</h2>
-            <span class="drawer-username">&#64;{{ usuarioSelecionado.username }}</span>
+    @if (loadingDetalhe) {
+    <app-loading />
+    } @else if (usuarioSelecionado) {
+    <header class="drawer-header-profile">
+      <div class="drawer-profile-info">
+        <div class="drawer-avatar-large">
+          {{ obterIniciais(usuarioSelecionado.name || usuarioSelecionado.username) }}
+        </div>
+        <div>
+          <h2>{{ usuarioSelecionado.name || usuarioSelecionado.username }}</h2>
+          <span class="drawer-username">&#64;{{ usuarioSelecionado.username }}</span>
+        </div>
+      </div>
+
+      <button type="button" class="drawer-close" (click)="fecharDetalhe()" aria-label="Fechar">
+        &times;
+      </button>
+    </header>
+
+    <section class="drawer-section">
+      <div class="drawer-field">
+        <span>E-mail</span>
+        <strong>{{ usuarioSelecionado.email }}</strong>
+      </div>
+
+      <div class="drawer-field">
+        <span>Telefone</span>
+        <strong>{{ usuarioSelecionado.phoneNumber }}</strong>
+      </div>
+
+      <div class="drawer-field">
+        <span>Criado em</span>
+        <strong>{{ usuarioSelecionado.createdAt | date:'dd/MM/yyyy HH:mm' }}</strong>
+      </div>
+
+      <div class="drawer-field">
+        <span>Último login</span>
+        <strong>
+          {{ usuarioSelecionado.lastLogin ? (usuarioSelecionado.lastLogin | date:'dd/MM/yyyy HH:mm') : 'Nunca acessou'
+          }}
+        </strong>
+      </div>
+
+      <div class="drawer-field">
+        <span>Tentativas de login falhas</span>
+        <strong [class.warning]="usuarioSelecionado.failedAttempts > 0">
+          {{ usuarioSelecionado.failedAttempts }}
+        </strong>
+      </div>
+    </section>
+
+    <section class="drawer-section">
+      <label class="drawer-label">Role</label>
+      <select [ngModel]="usuarioSelecionado.role" (ngModelChange)="alterarRole(usuarioSelecionado, $event)">
+        @for (role of rolesDisponiveis; track role) {
+        <option [value]="role">{{ roleLabels[role] }}</option>
+        }
+      </select>
+    </section>
+
+    <section class="drawer-section">
+      <label class="drawer-label">Status da conta</label>
+      <app-button [variant]="usuarioSelecionado.active ? 'danger' : 'primary'"
+        (click)="toggleAtivo(usuarioSelecionado)">
+        {{ usuarioSelecionado.active ? 'Desativar usuário' : 'Ativar usuário' }}
+      </app-button>
+    </section>
+
+    <section class="drawer-section">
+      <label class="drawer-label">Atividade recente</label>
+
+      <ul class="activity-list">
+        @for (evento of usuarioSelecionado.recentActivity; track evento.loginTime) {
+        <li class="activity-item" [class.failed]="!evento.success">
+          <div class="activity-row">
+            <span class="activity-status">{{ evento.success ? 'Sucesso' : 'Falha' }}</span>
+            <span class="activity-time">{{ evento.loginTime | date:'dd/MM/yyyy HH:mm' }}</span>
           </div>
 
-          <button type="button" class="drawer-close" (click)="fecharDetalhe()" aria-label="Fechar">
-            &times;
-          </button>
-        </header>
-
-        <section class="drawer-section">
-          <div class="drawer-field">
-            <span>E-mail</span>
-            <strong>{{ usuarioSelecionado.email }}</strong>
-          </div>
-
-          <div class="drawer-field">
-            <span>Telefone</span>
-            <strong>{{ usuarioSelecionado.phoneNumber }}</strong>
-          </div>
-
-          <div class="drawer-field">
-            <span>Criado em</span>
-            <strong>{{ usuarioSelecionado.createdAt | date:'dd/MM/yyyy HH:mm' }}</strong>
-          </div>
-
-          <div class="drawer-field">
-            <span>Último login</span>
-            <strong>
-              {{ usuarioSelecionado.lastLogin ? (usuarioSelecionado.lastLogin | date:'dd/MM/yyyy HH:mm') : 'Nunca acessou' }}
-            </strong>
-          </div>
-
-          <div class="drawer-field">
-            <span>Tentativas de login falhas</span>
-            <strong [class.warning]="usuarioSelecionado.failedAttempts > 0">
-              {{ usuarioSelecionado.failedAttempts }}
-            </strong>
-          </div>
-        </section>
-
-        <section class="drawer-section">
-          <label class="drawer-label">Role</label>
-          <select
-            [ngModel]="usuarioSelecionado.role"
-            (ngModelChange)="alterarRole(usuarioSelecionado, $event)"
-          >
-            @for (role of rolesDisponiveis; track role) {
-              <option [value]="role">{{ roleLabels[role] }}</option>
+          <div class="activity-meta">
+            <span>{{ evento.ipAddress }}</span>
+            @if (!evento.success && evento.failureReason) {
+            <span>&bull; {{ evento.failureReason }}</span>
             }
-          </select>
-        </section>
-
-        <section class="drawer-section">
-          <label class="drawer-label">Status da conta</label>
-          <app-button
-            [variant]="usuarioSelecionado.active ? 'danger' : 'primary'"
-            (click)="toggleAtivo(usuarioSelecionado)"
-          >
-            {{ usuarioSelecionado.active ? 'Desativar usuário' : 'Ativar usuário' }}
-          </app-button>
-        </section>
-
-        <section class="drawer-section">
-          <label class="drawer-label">Atividade recente</label>
-
-          <ul class="activity-list">
-            @for (evento of usuarioSelecionado.recentActivity; track evento.loginTime) {
-              <li class="activity-item" [class.failed]="!evento.success">
-                <div class="activity-row">
-                  <span class="activity-status">{{ evento.success ? 'Sucesso' : 'Falha' }}</span>
-                  <span class="activity-time">{{ evento.loginTime | date:'dd/MM/yyyy HH:mm' }}</span>
-                </div>
-
-                <div class="activity-meta">
-                  <span>{{ evento.ipAddress }}</span>
-                  @if (!evento.success && evento.failureReason) {
-                    <span>&bull; {{ evento.failureReason }}</span>
-                  }
-                </div>
-              </li>
-            } @empty {
-              <li class="activity-empty">Sem atividade registrada.</li>
-            }
-          </ul>
-        </section>
-      }
-    </aside>
-  </div>
+          </div>
+        </li>
+        } @empty {
+        <li class="activity-empty">Sem atividade registrada.</li>
+        }
+      </ul>
+    </section>
+    }
+  </aside>
+</div>
 }
