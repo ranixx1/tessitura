@@ -77,17 +77,31 @@
             </app-button>
         </div>
 
-        <div class="members-list" *ngIf="timeSelecionado.membros.length > 0">
-            <div class="member-item" *ngFor="let userId of timeSelecionado.membros">
-                <div class="member-info">
-                    <strong>{{ obterUsuario(userId)?.username || 'Usuário #' + userId }}</strong>
-                    <small>{{ obterUsuario(userId)?.email }}</small>
+        <div class="membros-lista" *ngIf="timeSelecionado.membros.length > 0">
+
+            <div class="membro" *ngFor="let userId of timeSelecionado.membros">
+
+                <div class="membro-content">
+                    <div class="membro-avatar">
+                        {{ obterIniciais(obterUsuario(userId)?.username) }}
+                    </div>
+
+                    <div class="membro-info">
+                        <strong>
+                            {{ obterUsuario(userId)?.username || 'Usuário #' + userId }}
+                        </strong>
+                        <small>
+                            {{ obterUsuario(userId)?.email }}
+                        </small>
+                    </div>
                 </div>
 
                 <button type="button" class="remove-member" (click)="removerMembro(userId)">
                     Remover
                 </button>
+
             </div>
+
         </div>
 
         <div class="empty-state" *ngIf="timeSelecionado.membros.length === 0">
