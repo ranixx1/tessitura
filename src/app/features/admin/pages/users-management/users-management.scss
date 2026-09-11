@@ -9,8 +9,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .users-header {
@@ -73,7 +80,8 @@
   border-collapse: collapse;
   white-space: nowrap;
 
-  th, td {
+  th,
+  td {
     padding: 18px 24px;
     text-align: left;
     font-size: 14px;
@@ -137,6 +145,7 @@
 
   &.active {
     color: #027a48;
+
     &::before {
       background-color: #12b76a;
     }
@@ -177,8 +186,13 @@
 }
 
 @keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .drawer {
@@ -196,8 +210,13 @@
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .drawer-header {
@@ -329,7 +348,7 @@ select {
   &.failed {
     background: #fef3f2;
     border-color: #fecdca;
-    
+
     .activity-status {
       color: #b42318;
     }
@@ -371,4 +390,81 @@ select {
   background: #f9fafb;
   border-radius: 8px;
   border: 1px dashed #d0d5dd;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eff8ff;
+  color: #175cd3;
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+  border: 1px solid #b2ddff;
+}
+
+.user-cell-info {
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    color: #101828;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  small {
+    color: #475467;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   DRAWER PROFILE HEADER
+   ========================= */
+
+.drawer-header-profile {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaecf0;
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #101828;
+  }
+}
+
+.drawer-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.drawer-avatar-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eff8ff;
+  color: #175cd3;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+  border: 1px solid #b2ddff;
 }
