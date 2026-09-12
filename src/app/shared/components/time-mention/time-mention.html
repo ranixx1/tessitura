@@ -1,0 +1,103 @@
+<div class="team-mention-section">
+
+  <div class="section-header">
+
+    <h3>Times envolvidos</h3>
+
+    <p>
+      Use @ para mencionar os times que devem acompanhar o chamado.
+    </p>
+
+  </div>
+
+  @if (loading) {
+
+    <div class="mention-loading">
+      Carregando times...
+    </div>
+
+  } @else {
+
+    @if (errorMessage) {
+
+      <div class="mention-error">
+        {{ errorMessage }}
+      </div>
+
+    }
+
+    <div class="team-mention-input">
+
+      <input
+        type="text"
+        class="mention-input"
+        [(ngModel)]="mencaoTexto"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="@ Mencionar um time"
+        (input)="filtrarTimes()"
+      />
+
+      @if (timesFiltrados.length > 0) {
+
+        <div class="mention-dropdown">
+
+          @for (time of timesFiltrados; track time.id) {
+
+            <button
+              type="button"
+              class="mention-option"
+              (click)="selecionarTime(time)"
+            >
+
+              <span class="mention-icon">
+                @
+              </span>
+
+              <span class="mention-name">
+                {{ time.nome }}
+              </span>
+
+            </button>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+    @if (timesSelecionados.length > 0) {
+
+      <div class="selected-teams">
+
+        @for (
+          time of timesSelecionados;
+          track time.id
+        ) {
+
+          <div class="team-tag">
+
+            <span>
+              @{{ time.nome }}
+            </span>
+
+            <button
+              type="button"
+              (click)="removerTime(time)"
+              aria-label="Remover time"
+            >
+              ×
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+  }
+
+</div>
