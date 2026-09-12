@@ -62,12 +62,29 @@
             " />
 
 
-        <app-input label="Descrição" type="textarea" [rows]="7" id="descricao" formControlName="descricao"
-          placeholder="Descreva detalhadamente o problema..." [error]="
-              form.controls.descricao.touched && form.controls.descricao.invalid
-                ? 'A descrição deve possuir pelo menos 10 caracteres.'
-                : ''
-            " />
+<div class="form-field">
+
+  <label for="descricao">
+    Descrição
+  </label>
+
+  <textarea 
+    id="descricao" 
+    formControlName="descricao" 
+    rows="7"
+    placeholder="Descreva o problema e use @ para mencionar um time..." 
+    class="description-input"
+    [mention]="timesDisponiveis"
+    [mentionConfig]="{ triggerChar: '@', labelKey: 'nome' }">
+  </textarea>
+
+  @if (form.controls.descricao.touched && form.controls.descricao.invalid) {
+    <span class="field-error">
+      A descrição deve possuir pelo menos 10 caracteres.
+    </span>
+  }
+
+</div>
 
       </section>
 
