@@ -8,6 +8,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MentionModule } from 'angular-mentions';
+import { Time } from '../../../admin/models/time';
+import { TimeService } from '../../../admin/services/time.service';
 
 import { Chamado } from '../../model/chamado';
 import { ChamadoService } from '../../../portal/services/chamado.service';
@@ -21,6 +24,7 @@ import { DatePipe } from '@angular/common';
     DatePipe,
     CommonModule,
     FormsModule,
+    MentionModule,
   ],
   templateUrl: './chamado-detail.html',
   styleUrl: './chamado-detail.scss',
@@ -31,15 +35,16 @@ export class ChamadoDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly timeService = inject(TimeService);
 
   chamado: Chamado | null = null;
+  timesDisponiveis: Time[] = []; 
 
   loading = true;
   error = false;
 
   novoComentario = '';
   enviandoComentario = false;
-
   alterandoStatus = false;
 
   successMessage = '';
@@ -48,9 +53,7 @@ export class ChamadoDetailComponent implements OnInit {
   historico: ChamadoHistorico[] = [];
 
   ngOnInit(): void {
-    const id = Number(
-      this.route.snapshot.paramMap.get('id'),
-    );
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!id) {
       this.router.navigate(['/helpdesk/chamados']);
@@ -58,6 +61,19 @@ export class ChamadoDetailComponent implements OnInit {
     }
 
     this.carregarChamado(id);
+    this.carregarTimes(); 
+  }
+
+  private carregarTimes(): void {
+    this.timeService.listarTodos().subscribe({
+      next: (times) => {
+        this.timesDisponiveis = times ?? [];
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Erro ao carregar times:', error);
+      },
+    });
   }
 
   private carregarChamado(id: number): void {
@@ -69,54 +85,36 @@ export class ChamadoDetailComponent implements OnInit {
       next: (chamado) => {
         this.chamado = chamado;
         this.loading = false;
-
         this.cdr.detectChanges();
       },
-
       error: (error) => {
-        console.error(
-          'Erro ao carregar chamado:',
-          error,
-        );
-
+        console.error('Erro ao carregar chamado:', error);
         this.loading = false;
         this.error = true;
-        this.errorMessage =
-          'Não foi possível carregar os detalhes do chamado.';
-
+        this.errorMessage = 'Não foi possível carregar os detalhes do chamado.';
         this.cdr.detectChanges();
       },
     });
   }
 
   carregarHistorico(): void {
-    this.chamadoService
-      .listarHistorico(this.chamado?.id ?? 0)
-      .subscribe({
-        next: (historico) => {
-          this.historico = historico;
-        },
-        error: (error) => {
-          console.error(
-            'Erro ao carregar histórico:',
-            error
-          );
-        },
-      });
+    this.chamadoService.listarHistorico(this.chamado?.id ?? 0).subscribe({
+      next: (historico) => {
+        this.historico = historico;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar histórico:', error);
+      },
+    });
   }
 
   adicionarComentario(): void {
-    if (
-      !this.chamado ||
-      !this.novoComentario.trim() ||
-      this.enviandoComentario
-    ) {
+    if (!this.chamado || !this.novoComentario.trim() || this.enviandoComentario) {
       return;
     }
 
     if (this.chamado.status === 'FECHADO') {
-      this.errorMessage =
-        'Não é possível comentar em um chamado fechado.';
+      this.errorMessage = 'Não é possível comentar em um chamado fechado.';
       return;
     }
 
@@ -124,52 +122,37 @@ export class ChamadoDetailComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
+    const textoFinal = this.novoComentario.trim();
+
+    const timesMencionadosNoTexto = this.timesDisponiveis.filter(time =>
+      textoFinal.includes(`@${time.nome}`)
+    );
     this.chamadoService
       .adicionarComentario(
         this.chamado.id,
-        this.novoComentario.trim(),
-
+        textoFinal,
       )
       .subscribe({
         next: (chamadoAtualizado) => {
           this.chamado = chamadoAtualizado;
-
           this.novoComentario = '';
           this.carregarHistorico();
           this.enviandoComentario = false;
-
-          this.successMessage =
-            'Comentário adicionado com sucesso.';
-
+          this.successMessage = 'Comentário adicionado com sucesso.';
           this.cdr.detectChanges();
-
           this.limparMensagemSucesso();
         },
-
         error: (error) => {
-          console.error(
-            'Erro ao adicionar comentário:',
-            error,
-          );
-
+          console.error('Erro ao adicionar comentário:', error);
           this.enviandoComentario = false;
-
-          this.errorMessage =
-            error?.error?.message ??
-            'Não foi possível adicionar o comentário.';
-
+          this.errorMessage = error?.error?.message ?? 'Não foi possível adicionar o comentário.';
           this.cdr.detectChanges();
         },
       });
   }
 
   alterarStatus(status: string): void {
-    if (
-      !this.chamado ||
-      this.alterandoStatus ||
-      this.chamado.status === status
-
-    ) {
+    if (!this.chamado || this.alterandoStatus || this.chamado.status === status) {
       return;
     }
 
@@ -177,47 +160,26 @@ export class ChamadoDetailComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
-
-    this.chamadoService
-      .alterarStatus(
-        this.chamado.id,
-        status as Chamado['status'],
-
-      )
-      .subscribe({
-        next: (chamadoAtualizado) => {
-          this.chamado = chamadoAtualizado;
-          this.carregarHistorico();
-          this.alterandoStatus = false;
-          this.successMessage =
-            'Status atualizado com sucesso.';
-
-          this.cdr.detectChanges();
-
-          this.limparMensagemSucesso();
-        },
-
-        error: (error) => {
-          console.error(
-            'Erro ao alterar status:',
-            error,
-          );
-
-          this.alterandoStatus = false;
-
-          this.errorMessage =
-            error?.error?.message ??
-            'Não foi possível alterar o status.';
-
-          this.cdr.detectChanges();
-        },
-      });
+    this.chamadoService.alterarStatus(this.chamado.id, status as Chamado['status']).subscribe({
+      next: (chamadoAtualizado) => {
+        this.chamado = chamadoAtualizado;
+        this.carregarHistorico();
+        this.alterandoStatus = false;
+        this.successMessage = 'Status atualizado com sucesso.';
+        this.cdr.detectChanges();
+        this.limparMensagemSucesso();
+      },
+      error: (error) => {
+        console.error('Erro ao alterar status:', error);
+        this.alterandoStatus = false;
+        this.errorMessage = error?.error?.message ?? 'Não foi possível alterar o status.';
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   voltar(): void {
-    this.router.navigate([
-      '/helpdesk/chamados',
-    ]);
+    this.router.navigate(['/helpdesk/chamados']);
   }
 
   get chamadoFechado(): boolean {
@@ -225,8 +187,7 @@ export class ChamadoDetailComponent implements OnInit {
   }
 
   get podeAlterarStatus(): boolean {
-    return !!this.chamado &&
-      this.chamado.status !== 'FECHADO';
+    return !!this.chamado && this.chamado.status !== 'FECHADO';
   }
 
   limparMensagemSucesso(): void {

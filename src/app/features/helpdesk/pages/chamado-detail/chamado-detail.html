@@ -190,119 +190,124 @@
   <!-- COMENTÁRIOS -->
 
   <section class="content-card">
+    <div class="section-header">
+      <div>
+        <h2>Comentários</h2>
+        <p>Acompanhe as interações relacionadas ao chamado.</p>
+      </div>
+      <span class="comment-count">
+        {{ chamado.comentarios.length || 0 }}
+      </span>
+    </div>
+
+    @if (chamado.comentarios.length) {
+      <div class="comments-list">
+        @for (comentario of chamado.comentarios; track comentario.id) {
+          <article class="comment">
+            <div class="comment-header">
+              <strong>{{ comentario.username }}</strong>
+              <span>{{ comentario.dataHoraCriacao | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <p>{{ comentario.mensagem }}</p>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-comments">
+        <span>💬</span>
+        <p>Nenhum comentário foi adicionado ainda.</p>
+      </div>
+    }
+
+    @if (!chamadoFechado) {
+      <div class="comment-form">
+        <label for="comentario">Adicionar comentário</label>
+        
+        <textarea 
+          id="comentario" 
+          [(ngModel)]="novoComentario" 
+          rows="4" 
+          placeholder="Escreva uma mensagem e use @ para mencionar um time..."
+          [disabled]="enviandoComentario"
+          [mention]="timesDisponiveis"
+          [mentionConfig]="{ triggerChar: '@', labelKey: 'nome' }">
+        </textarea>
+
+        <div class="comment-actions">
+          <span>{{ novoComentario.length }} caracteres</span>
+          <button 
+            type="button" 
+            class="primary-button" 
+            (click)="adicionarComentario()" 
+            [disabled]="!novoComentario.trim() || enviandoComentario">
+            @if (enviandoComentario) {
+              Enviando...
+            } @else {
+              Adicionar comentário
+            }
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="closed-notice">
+        Este chamado está fechado e não aceita novos comentários.
+      </div>
+    }
+  </section>
+
+  <!-- STATUS -->
+
+  @if (podeAlterarStatus) {
+
+  <section class="content-card status-section">
 
     <div class="section-header">
 
       <div>
 
-        <h2>Comentários</h2>
+        <h2>Gerenciar chamado</h2>
 
         <p>
-          Acompanhe as interações relacionadas ao chamado.
+          Atualize o status conforme o andamento da solicitação.
         </p>
 
       </div>
 
-      <span class="comment-count">
-        {{ chamado.comentarios.length || 0 }}
-      </span>
-
     </div>
 
+    <div class="status-actions">
 
-    @if (chamado.comentarios.length) {
+      <button type="button" class="status-button progress" [class.current]="chamado.status === 'EM_PROGRESSO'"
+        [disabled]="alterandoStatus" (click)="alterarStatus('EM_PROGRESSO')">
+        Em progresso
+      </button>
 
-    <div class="comments-list">
+      <button type="button" class="status-button waiting" [class.current]="chamado.status === 'AGUARDANDO_USUARIO'"
+        [disabled]="alterandoStatus" (click)="alterarStatus('AGUARDANDO_USUARIO')">
+        Aguardando usuário
+      </button>
 
-      @for (
-      comentario of chamado.comentarios;
-      track comentario.id
-      ) {
-
-      <article class="comment">
-
-        <div class="comment-header">
-
-          <strong>
-            {{ comentario.username }}
-          </strong>
-
-          <span>
-            {{ comentario.dataHoraCriacao | date:'dd/MM/yyyy HH:mm' }}
-          </span>
-
-        </div>
-
-        <p>
-          {{ comentario.mensagem }}
-        </p>
-
-      </article>
-
-      }
+      <button type="button" class="status-button close" [disabled]="alterandoStatus" (click)="alterarStatus('FECHADO')">
+        Fechar chamado
+      </button>
 
     </div>
-
-    } @else {
-
-    <div class="empty-comments">
-
-      <span>💬</span>
-
-      <p>
-        Nenhum comentário foi adicionado ainda.
-      </p>
-
-    </div>
-
-    }
-
-
-    @if (!chamadoFechado) {
-
-    <div class="comment-form">
-
-      <label for="comentario">
-        Adicionar comentário
-      </label>
-
-      <textarea id="comentario" [(ngModel)]="novoComentario" rows="4" placeholder="Escreva uma mensagem..."
-        [disabled]="enviandoComentario"></textarea>
-
-      <div class="comment-actions">
-
-        <span>
-          {{ novoComentario.length }} caracteres
-        </span>
-
-        <button type="button" class="primary-button" (click)="adicionarComentario()" [disabled]="
-                !novoComentario.trim() ||
-                enviandoComentario
-              ">
-
-          @if (enviandoComentario) {
-          Enviando...
-          } @else {
-          Adicionar comentário
-          }
-
-        </button>
-
-      </div>
-
-    </div>
-
-    } @else {
-
-    <div class="closed-notice">
-      Este chamado está fechado e não aceita novos comentários.
-    </div>
-
-    }
 
   </section>
 
-  <section class="historico-section">
+  } @else {
+
+  <div class="closed-banner">
+    <strong>Chamado fechado</strong>
+
+    <span>
+      Este chamado não pode mais ser alterado ou receber comentários.
+    </span>
+  </div>
+
+  }
+
+    <section class="historico-section">
 
     <div class="section-header">
       <h2>Histórico</h2>
@@ -365,58 +370,6 @@
     }
 
   </section>
-  <!-- STATUS -->
-
-  @if (podeAlterarStatus) {
-
-  <section class="content-card status-section">
-
-    <div class="section-header">
-
-      <div>
-
-        <h2>Gerenciar chamado</h2>
-
-        <p>
-          Atualize o status conforme o andamento da solicitação.
-        </p>
-
-      </div>
-
-    </div>
-
-    <div class="status-actions">
-
-      <button type="button" class="status-button progress" [class.current]="chamado.status === 'EM_PROGRESSO'"
-        [disabled]="alterandoStatus" (click)="alterarStatus('EM_PROGRESSO')">
-        Em progresso
-      </button>
-
-      <button type="button" class="status-button waiting" [class.current]="chamado.status === 'AGUARDANDO_USUARIO'"
-        [disabled]="alterandoStatus" (click)="alterarStatus('AGUARDANDO_USUARIO')">
-        Aguardando usuário
-      </button>
-
-      <button type="button" class="status-button close" [disabled]="alterandoStatus" (click)="alterarStatus('FECHADO')">
-        Fechar chamado
-      </button>
-
-    </div>
-
-  </section>
-
-  } @else {
-
-  <div class="closed-banner">
-    <strong>Chamado fechado</strong>
-
-    <span>
-      Este chamado não pode mais ser alterado ou receber comentários.
-    </span>
-  </div>
-
-  }
-
 </div>
 
 }
