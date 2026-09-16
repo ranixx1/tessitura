@@ -1,0 +1,126 @@
+.top-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  height: 60px;
+  padding: 0 1.75rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #5100ff, #7c3aed);
+      color: #ffffff;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .logo-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #18181b;
+      letter-spacing: -0.3px;
+    }
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 2rem;
+    justify-self: center;
+
+    a {
+      position: relative;
+      text-decoration: none;
+      color: #71717a;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 20px 0;
+      transition: color 0.15s ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: #5100ff;
+        border-radius: 2px;
+        transform: scaleX(0);
+        transition: transform 0.15s ease;
+      }
+
+      &:hover {
+        color: #18181b;
+      }
+
+      &.active {
+        color: #18181b;
+
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: end;
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f4f0ff;
+      color: #5100ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .user-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #3f3f46;
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      color: #a1a1aa;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s ease, background-color 0.15s ease;
+
+      &:hover {
+        color: #ef4444;
+        background-color: #fef2f2;
+      }
+    }
+  }
+}
