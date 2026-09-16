@@ -306,10 +306,16 @@
 
   }
 
-    <section class="historico-section">
+@if (podeVerHistorico) {
+  <section class="content-card historico-section">
 
     <div class="section-header">
-      <h2>Histórico</h2>
+      <div>
+        <h2>Histórico</h2>
+        <p>
+          Registro das alterações e eventos deste chamado.
+        </p>
+      </div>
 
       <span class="section-count">
         {{ historico.length }}
@@ -318,57 +324,62 @@
 
     @if (historico.length === 0) {
 
-    <div class="historico-empty">
-      <p>Nenhum evento registrado.</p>
-    </div>
+      <div class="historico-empty">
+        <div class="historico-empty-icon">
+          ⓘ
+        </div>
+
+        <p>Nenhum evento registrado.</p>
+      </div>
 
     } @else {
 
-    <div class="historico-timeline">
+      <div class="historico-timeline">
 
-      @for (evento of historico; track evento.id) {
+        @for (evento of historico; track evento.id) {
 
-      <article class="historico-item">
+          <article class="historico-item">
 
-        <div class="historico-marker"></div>
+            <div class="historico-marker">
+              <span></span>
+            </div>
 
-        <div class="historico-content">
+            <div class="historico-content">
 
-          <div class="historico-top">
+              <div class="historico-top">
 
-            <strong>
-              {{ evento.username }}
-            </strong>
+                <div class="historico-user">
+                  <strong>
+                    {{ evento.username }}
+                  </strong>
 
-            <time>
-              {{ evento.dataHora | date:'dd/MM/yyyy HH:mm' }}
-            </time>
+                  <span class="historico-event-type">
+                    {{ evento.tipoEvento }}
+                  </span>
+                </div>
 
-          </div>
+                <time>
+                  {{ evento.dataHora | date:'dd/MM/yyyy HH:mm' }}
+                </time>
 
-          <div class="historico-event">
+              </div>
 
-            <span class="evento-tipo">
-              {{ evento.tipoEvento }}
-            </span>
+              <p class="historico-description">
+                {{ evento.descricao }}
+              </p>
 
-            <p>
-              {{ evento.descricao }}
-            </p>
+            </div>
 
-          </div>
+          </article>
 
-        </div>
+        }
 
-      </article>
-
-      }
-
-    </div>
+      </div>
 
     }
 
   </section>
+}
 </div>
 
 }
