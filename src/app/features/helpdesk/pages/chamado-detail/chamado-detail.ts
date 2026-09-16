@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MentionModule } from 'angular-mentions';
@@ -15,7 +15,8 @@ import { TimeService } from '../../../admin/services/time.service';
 import { Chamado } from '../../model/chamado';
 import { ChamadoService } from '../../../portal/services/chamado.service';
 import { ChamadoHistorico } from '../../model/chamadoHistorico';
-import { DatePipe } from '@angular/common';
+import { JwtService } from '../../../../core/services/jwt.service';
+
 
 @Component({
   selector: 'app-chamado-detail',
@@ -36,9 +37,10 @@ export class ChamadoDetailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly timeService = inject(TimeService);
+  private readonly jwtService = inject(JwtService);
 
   chamado: Chamado | null = null;
-  timesDisponiveis: Time[] = []; 
+  timesDisponiveis: Time[] = [];
 
   loading = true;
   error = false;
@@ -46,6 +48,7 @@ export class ChamadoDetailComponent implements OnInit {
   novoComentario = '';
   enviandoComentario = false;
   alterandoStatus = false;
+  podeVerHistorico = false;
 
   successMessage = '';
   errorMessage = '';
@@ -60,8 +63,25 @@ export class ChamadoDetailComponent implements OnInit {
       return;
     }
 
+    this.verificarPermissaoHistorico();
+
     this.carregarChamado(id);
-    this.carregarTimes(); 
+    this.carregarTimes();
+  }
+
+  private verificarPermissaoHistorico(): void {
+    const roleDoUsuario = this.jwtService.getRole();
+
+    console.log('ROLE NO JWT:', roleDoUsuario);
+
+    this.podeVerHistorico =
+      roleDoUsuario === 'ROLE_ADMIN' ||
+      roleDoUsuario === 'ROLE_SUPERADMIN';
+
+    console.log(
+      'PODE VER HISTÓRICO:',
+      this.podeVerHistorico
+    );
   }
 
   private carregarTimes(): void {
@@ -85,6 +105,11 @@ export class ChamadoDetailComponent implements OnInit {
       next: (chamado) => {
         this.chamado = chamado;
         this.loading = false;
+
+        if (this.podeVerHistorico) {
+          this.carregarHistorico();
+        }
+
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -98,14 +123,28 @@ export class ChamadoDetailComponent implements OnInit {
   }
 
   carregarHistorico(): void {
-    this.chamadoService.listarHistorico(this.chamado?.id ?? 0).subscribe({
-      next: (historico) => {
-        this.historico = historico;
-      },
-      error: (error) => {
-        console.error('Erro ao carregar histórico:', error);
-      },
-    });
+    if (!this.podeVerHistorico || !this.chamado) {
+      return;
+    }
+
+    this.chamadoService
+      .listarHistorico(this.chamado.id)
+      .subscribe({
+        next: (historico) => {
+          this.historico = historico ?? [];
+          this.cdr.detectChanges();
+        },
+
+        error: (error) => {
+          console.error(
+            'Erro ao carregar histórico:',
+            error
+          );
+
+          this.historico = [];
+          this.cdr.detectChanges();
+        },
+      });
   }
 
   adicionarComentario(): void {
@@ -136,7 +175,12 @@ export class ChamadoDetailComponent implements OnInit {
         next: (chamadoAtualizado) => {
           this.chamado = chamadoAtualizado;
           this.novoComentario = '';
-          this.carregarHistorico();
+
+          // Só atualiza a aba se ele tiver permissão
+          if (this.podeVerHistorico) {
+            this.carregarHistorico();
+          }
+
           this.enviandoComentario = false;
           this.successMessage = 'Comentário adicionado com sucesso.';
           this.cdr.detectChanges();
@@ -163,7 +207,11 @@ export class ChamadoDetailComponent implements OnInit {
     this.chamadoService.alterarStatus(this.chamado.id, status as Chamado['status']).subscribe({
       next: (chamadoAtualizado) => {
         this.chamado = chamadoAtualizado;
-        this.carregarHistorico();
+
+        if (this.podeVerHistorico) {
+          this.carregarHistorico();
+        }
+
         this.alterandoStatus = false;
         this.successMessage = 'Status atualizado com sucesso.';
         this.cdr.detectChanges();
