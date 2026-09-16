@@ -27,6 +27,10 @@ export class JwtService {
     return this.storage.get(STORAGE_KEYS.TOKEN);
   }
 
+  clearSession(): void {
+    this.clearToken();
+  }
+  
   clearToken(): void {
     this.storage.remove(STORAGE_KEYS.TOKEN);
   }
