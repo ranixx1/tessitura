@@ -1,0 +1,557 @@
+.time-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.time-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.time-header-titles {
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #101828;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #475467;
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   CREATE TIME
+   ========================= */
+
+.create-time-card {
+  padding: 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.create-time-header {
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 0;
+    color: #101828;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #667085;
+    font-size: 14px;
+  }
+}
+
+.create-time-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  input {
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #101828;
+    font-size: 14px;
+
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #98a2b3;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #1570ef;
+      box-shadow: 0 0 0 4px rgba(21, 112, 239, 0.2);
+    }
+  }
+}
+
+/* =========================
+   TIMES
+   ========================= */
+
+.times-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-title {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  );
+
+  gap: 16px;
+}
+
+/* =========================
+   TIME CARD
+   ========================= */
+
+.time-card {
+  padding: 20px;
+
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+
+  box-shadow:
+    0 1px 3px rgba(16, 24, 40, 0.06);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    border-color: #d0d5dd;
+
+    box-shadow:
+      0 8px 16px rgba(16, 24, 40, 0.08);
+  }
+}
+
+.time-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.time-info {
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+
+    color: #101828;
+    font-size: 16px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    display: block;
+    margin-top: 6px;
+
+    color: #667085;
+    font-size: 13px;
+  }
+}
+
+.time-members-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 10px;
+
+  border-radius: 16px;
+
+  background: #eff8ff;
+  border: 1px solid #b2ddff;
+
+  color: #175cd3;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =========================
+   BUTTON DELETE
+   ========================= */
+
+.delete-time {
+  border: none;
+  background: transparent;
+
+  color: #b42318;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background: #fef3f2;
+    color: #912018;
+  }
+}
+
+/* =========================
+   MEMBERS PANEL
+   ========================= */
+
+.members-card {
+  padding: 24px;
+
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
+
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid #eaecf0;
+
+  h2 {
+    margin: 0;
+
+    color: #101828;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  span {
+    color: #667085;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   ADD MEMBER
+   ========================= */
+
+.add-member {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+
+  select {
+    flex: 1;
+
+    height: 44px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #101828;
+    font-size: 14px;
+
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+
+      border-color: #1570ef;
+
+      box-shadow:
+        0 0 0 4px rgba(21, 112, 239, 0.2);
+    }
+  }
+}
+
+/* =========================
+   MEMBERS LIST
+   ========================= */
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #eaecf0;
+  border-radius: 8px;
+
+  background: #f9fafb;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background: #f2f4f7;
+    border-color: #d0d5dd;
+  }
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  strong {
+    color: #101828;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  small {
+    margin-top: 3px;
+
+    color: #667085;
+
+    font-size: 13px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.remove-member {
+  flex-shrink: 0;
+
+  border: none;
+  background: transparent;
+
+  padding: 6px 8px;
+
+  border-radius: 6px;
+
+  color: #b42318;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background: #fef3f2;
+    color: #912018;
+  }
+}
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.empty-state {
+  text-align: center;
+
+  padding: 48px 24px;
+
+  color: #667085;
+
+  font-size: 14px;
+
+  background: #f9fafb;
+
+  border: 1px dashed #d0d5dd;
+
+  border-radius: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+
+  .time-page {
+    padding: 20px;
+  }
+
+  .create-time-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-member {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .times-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .members-card {
+    padding: 20px;
+  }
+
+  .member-item {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .time-page {
+    padding: 16px;
+  }
+
+  .time-header-titles h1 {
+    font-size: 24px;
+  }
+
+  .time-card-header {
+    flex-direction: column;
+  }
+
+  .members-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.time-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}/* =========================
+   MELHORIAS DE MEMBROS & AVATAR
+   ========================= */
+
+.membro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid #eaecf0;
+  border-radius: 10px;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f2f4f7;
+    border-color: #d0d5dd;
+  }
+}
+
+.membro-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.membro-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #eff8ff;
+  color: #175cd3;
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+  border: 1px solid #b2ddff;
+}

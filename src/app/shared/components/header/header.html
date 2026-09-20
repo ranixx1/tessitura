@@ -1,0 +1,30 @@
+@if (!isAuthPage()) {
+<div class="header-wrapper">
+    <header class="top-header">
+        <a routerLink="/portal" class="logo-container" aria-label="Ir para o portal Tessitura">
+            <img src="svg/logo-lockup.svg" alt="Tessitura" class="logo-icon" />
+        </a>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+            <a routerLink="/helpdesk" routerLinkActive="active">Helpdesk</a>
+            <a routerLink="/admin/users" routerLinkActive="active">Admin</a>
+        </nav>
+
+        <div class="user-profile">
+            <div class="avatar" role="img" [attr.aria-label]="'Usuário: ' + (userName() || 'desconhecido')">
+                {{ userInitial() }}
+                <span class="status-dot" aria-hidden="true"></span>
+            </div>
+
+            <button type="button" class="logout-btn" (click)="logout()" aria-label="Sair do sistema">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+            </button>
+        </div>
+    </header>
+</div>
+}

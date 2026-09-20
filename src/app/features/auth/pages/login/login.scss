@@ -1,0 +1,56 @@
+@use '../../styles/auth-page' as *;
+
+.login-page {
+  @extend %auth-page;
+}
+
+.login-card {
+  @extend %auth-card;
+}
+
+.login-header {
+  @extend %auth-header;
+  display: flex;
+  justify-content: center;
+}
+
+.login-logo {
+  height: 40px;
+  width: auto;
+}
+
+.login-eyebrow {
+  @extend %auth-eyebrow;
+}
+
+form {
+  @extend %auth-form;
+}
+
+.login-options {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.25rem;
+
+  a {
+    @extend %auth-link;
+    font-size: 0.875rem;
+  }
+}
+
+.login-error {
+  margin-bottom: 1rem;
+}
+
+.register-link {
+  margin-top: 1.5rem;
+  text-align: center;
+
+  span {
+    margin-right: 0.35rem;
+  }
+
+  a {
+    @extend %auth-link;
+  }
+}

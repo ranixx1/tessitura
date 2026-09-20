@@ -1,0 +1,39 @@
+<div class="login-page">
+  <app-card class="login-card">
+    <div class="login-header">
+<img src="/svg/logo-lockup.svg" alt="Tessitura" class="login-logo">    </div>
+
+    @if (errorMessage) {
+    <app-alert type="error" [message]="errorMessage" />
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <app-input label="Username ou e-mail" type="text" formControlName="login"
+        placeholder="Digite seu username ou e-mail" />
+
+      <app-input label="Senha" type="password" formControlName="password" placeholder="Digite sua senha" />
+
+      <div class="login-options">
+        <a routerLink="/forgot-password">
+          Esqueci minha senha
+        </a>
+      </div>
+
+      <app-button type="submit" [disabled]="loginForm.invalid || loading">
+        @if (loading) {
+        <app-loading />
+        } @else {
+        Entrar
+        }
+      </app-button>
+    </form>
+
+    <div class="register-link">
+      <span>Ainda não possui uma conta?</span>
+
+      <a routerLink="/register">
+        Criar conta
+      </a>
+    </div>
+  </app-card>
+</div>

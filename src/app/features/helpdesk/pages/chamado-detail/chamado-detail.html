@@ -1,0 +1,385 @@
+@if (loading) {
+
+<div class="state-container">
+  <div class="loading-state">
+    <span class="loading-spinner"></span>
+    <p>Carregando detalhes do chamado...</p>
+  </div>
+</div>
+
+} @else if (error) {
+
+<div class="state-container">
+  <div class="error-state">
+
+    <div class="state-icon">
+      !
+    </div>
+
+    <h2>Não foi possível carregar o chamado</h2>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <button type="button" class="primary-button" (click)="voltar()">
+      Voltar para chamados
+    </button>
+
+  </div>
+</div>
+
+} @else if (chamado) {
+
+<div class="detail-page">
+
+  <!-- CABEÇALHO -->
+
+  <header class="detail-header">
+
+    <button type="button" class="back-button" (click)="voltar()">
+      ← Voltar para chamados
+    </button>
+
+    <div class="header-main">
+
+      <div>
+
+        <span class="codigo">
+          {{ chamado.codigo }}
+        </span>
+
+        <h1>
+          {{ chamado.titulo }}
+        </h1>
+
+      </div>
+
+      <span class="status-badge" [ngClass]="'status-' + chamado.status.toLowerCase()">
+        {{ chamado.status }}
+      </span>
+
+    </div>
+
+  </header>
+
+
+  <!-- MENSAGENS -->
+
+  @if (successMessage) {
+
+  <div class="success-message">
+    ✓ {{ successMessage }}
+  </div>
+
+  }
+
+  @if (errorMessage) {
+
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  }
+
+
+  <!-- INFORMAÇÕES -->
+
+  <section class="info-card">
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Portal
+      </span>
+
+      <strong>
+        {{ chamado.portal.nome || 'Não informado' }}
+      </strong>
+
+    </div>
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Categoria
+      </span>
+
+      <strong>
+        {{ chamado.categoria?.nome || 'Não informado' }}
+      </strong>
+
+    </div>
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Subtópico
+      </span>
+
+      <strong>
+        {{ chamado.subtopico?.nome || chamado.subtopico }}
+      </strong>
+
+    </div>
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Prioridade
+      </span>
+
+      <strong class="priority" [ngClass]="'priority-' + chamado.prioridade.toLowerCase()">
+        {{ chamado.prioridade }}
+      </strong>
+
+    </div>
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Escopo
+      </span>
+
+      <strong>
+        {{ chamado.escopo }}
+      </strong>
+
+    </div>
+
+    <div class="info-item">
+
+      <span class="info-label">
+        Status
+      </span>
+
+      <strong>
+        {{ chamado.status }}
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- DESCRIÇÃO -->
+
+  <section class="content-card">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Descrição</h2>
+
+        <p>
+          Detalhes informados na abertura do chamado.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="description">
+
+      {{ chamado.descricao }}
+
+    </div>
+
+  </section>
+
+
+  <!-- COMENTÁRIOS -->
+
+  <section class="content-card">
+    <div class="section-header">
+      <div>
+        <h2>Comentários</h2>
+        <p>Acompanhe as interações relacionadas ao chamado.</p>
+      </div>
+      <span class="comment-count">
+        {{ chamado.comentarios.length || 0 }}
+      </span>
+    </div>
+
+    @if (chamado.comentarios.length) {
+      <div class="comments-list">
+        @for (comentario of chamado.comentarios; track comentario.id) {
+          <article class="comment">
+            <div class="comment-header">
+              <strong>{{ comentario.username }}</strong>
+              <span>{{ comentario.dataHoraCriacao | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <p>{{ comentario.mensagem }}</p>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-comments">
+        <p>Nenhum comentário foi adicionado ainda.</p>
+      </div>
+    }
+
+    @if (!chamadoFechado) {
+      <div class="comment-form">
+        <label for="comentario">Adicionar comentário</label>
+        
+        <textarea 
+          id="comentario" 
+          [(ngModel)]="novoComentario" 
+          rows="4" 
+          placeholder="Escreva uma mensagem e use @ para mencionar um time..."
+          [disabled]="enviandoComentario"
+          [mention]="timesDisponiveis"
+          [mentionConfig]="{ triggerChar: '@', labelKey: 'nome' }">
+        </textarea>
+
+        <div class="comment-actions">
+          <span>{{ novoComentario.length }} caracteres</span>
+          <button 
+            type="button" 
+            class="primary-button" 
+            (click)="adicionarComentario()" 
+            [disabled]="!novoComentario.trim() || enviandoComentario">
+            @if (enviandoComentario) {
+              Enviando...
+            } @else {
+              Adicionar comentário
+            }
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="closed-notice">
+        Este chamado está fechado e não aceita novos comentários.
+      </div>
+    }
+  </section>
+
+  <!-- STATUS -->
+
+  @if (podeAlterarStatus) {
+
+  <section class="content-card status-section">
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>Gerenciar chamado</h2>
+
+        <p>
+          Atualize o status conforme o andamento da solicitação.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="status-actions">
+
+      <button type="button" class="status-button progress" [class.current]="chamado.status === 'EM_PROGRESSO'"
+        [disabled]="alterandoStatus" (click)="alterarStatus('EM_PROGRESSO')">
+        Em progresso
+      </button>
+
+      <button type="button" class="status-button waiting" [class.current]="chamado.status === 'AGUARDANDO_USUARIO'"
+        [disabled]="alterandoStatus" (click)="alterarStatus('AGUARDANDO_USUARIO')">
+        Aguardando usuário
+      </button>
+
+      <button type="button" class="status-button close" [disabled]="alterandoStatus" (click)="alterarStatus('FECHADO')">
+        Fechar chamado
+      </button>
+
+    </div>
+
+  </section>
+
+  } @else {
+
+  <div class="closed-banner">
+    <strong>Chamado fechado</strong>
+
+    <span>
+      Este chamado não pode mais ser alterado ou receber comentários.
+    </span>
+  </div>
+
+  }
+
+@if (podeVerHistorico) {
+  <section class="content-card historico-section">
+
+    <div class="section-header">
+      <div>
+        <h2>Histórico</h2>
+        <p>
+          Registro das alterações e eventos deste chamado.
+        </p>
+      </div>
+
+      <span class="section-count">
+        {{ historico.length }}
+      </span>
+    </div>
+
+    @if (historico.length === 0) {
+
+      <div class="historico-empty">
+        <div class="historico-empty-icon">
+          ⓘ
+        </div>
+
+        <p>Nenhum evento registrado.</p>
+      </div>
+
+    } @else {
+
+      <div class="historico-timeline">
+
+        @for (evento of historico; track evento.id) {
+
+          <article class="historico-item">
+
+            <div class="historico-marker">
+              <span></span>
+            </div>
+
+            <div class="historico-content">
+
+              <div class="historico-top">
+
+                <div class="historico-user">
+                  <strong>
+                    {{ evento.username }}
+                  </strong>
+
+                  <span class="historico-event-type">
+                    {{ evento.tipoEvento }}
+                  </span>
+                </div>
+
+                <time>
+                  {{ evento.dataHora | date:'dd/MM/yyyy HH:mm' }}
+                </time>
+
+              </div>
+
+              <p class="historico-description">
+                {{ evento.descricao }}
+              </p>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+}
+</div>
+
+}

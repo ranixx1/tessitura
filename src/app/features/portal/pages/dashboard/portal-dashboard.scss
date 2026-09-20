@@ -1,0 +1,165 @@
+.portal-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.portal-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 1rem;
+  }
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.portal-card {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  min-height: 180px;
+  padding: 1.5rem;
+
+  text-align: left;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+  }
+}
+
+.portal-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 10px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.portal-card-content {
+  min-width: 0;
+  padding-right: 1.5rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+
+    color: #0f172a;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+.portal-card-arrow {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+
+  color: #64748b;
+  font-size: 1.2rem;
+
+  transition: transform 0.2s ease;
+}
+
+.portal-card:hover .portal-card-arrow {
+  transform: translateX(4px);
+  color: #4f46e5;
+}
+
+.portal-loading {
+  padding: 2rem 0;
+  color: #64748b;
+}
+
+.portal-error {
+  padding: 1rem 1.25rem;
+
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.empty-state {
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    color: #0f172a;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+  }
+}
+
+@media (max-width: 1000px) {
+  .portal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .portal-page {
+    padding: 1.5rem;
+  }
+
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+}

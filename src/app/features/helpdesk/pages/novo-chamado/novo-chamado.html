@@ -1,0 +1,151 @@
+<div class="novo-chamado-page">
+
+  <header class="novo-chamado-header">
+
+    <button type="button" class="back-button" (click)="voltar()">
+      ← Voltar
+    </button>
+
+    <h1>Novo chamado</h1>
+
+    <p>
+      Descreva sua solicitação e forneça as informações necessárias.
+    </p>
+
+  </header>
+
+
+  @if (loading) {
+
+  <div class="loading-state">
+    Carregando informações...
+  </div>
+
+  } @else {
+
+  @if (errorMessage) {
+
+  <app-alert type="error" [message]="errorMessage" />
+
+  }
+
+  @if (successMessage) {
+
+  <app-alert type="success" [message]="successMessage" />
+
+  }
+
+  <app-card class="chamado-form-card">
+
+    <form [formGroup]="form" (ngSubmit)="abrirChamado()">
+
+      <!-- INFORMAÇÕES -->
+
+      <section class="form-section">
+
+        <div class="section-header">
+
+          <h2>Informações do chamado</h2>
+
+          <p>
+            Informe o problema ou solicitação.
+          </p>
+
+        </div>
+
+
+        <app-input label="Título" id="titulo" formControlName="titulo" placeholder="Ex.: Não consigo acessar o sistema"
+          [error]="
+              form.controls.titulo.touched && form.controls.titulo.invalid
+                ? 'Informe um título válido.'
+                : ''
+            " />
+
+
+<div class="form-field">
+
+  <label for="descricao">
+    Descrição
+  </label>
+
+  <textarea 
+    id="descricao" 
+    formControlName="descricao" 
+    rows="7"
+    placeholder="Descreva o problema e use @ para mencionar um time..." 
+    class="description-input"
+    [mention]="timesDisponiveis"
+    [mentionConfig]="{ triggerChar: '@', labelKey: 'nome' }">
+  </textarea>
+
+  @if (form.controls.descricao.touched && form.controls.descricao.invalid) {
+    <span class="field-error">
+      A descrição deve possuir pelo menos 10 caracteres.
+    </span>
+  }
+
+</div>
+
+      </section>
+
+
+
+      <section class="form-section">
+
+        @if (subtopicos.length > 0) {
+
+        <app-select label="Subtópico" id="subtopico" formControlName="subtopicoId" placeholder="Selecione um subtópico"
+          [options]="subtopicoOptions" />
+
+
+        <app-input label="Outro subtópico" id="outroSubtopico" formControlName="outroSubtopico"
+          placeholder="Caso não encontre o subtópico desejado" />
+
+        }
+
+
+        <div class="form-row">
+
+          <app-select label="Prioridade" id="prioridade" formControlName="prioridade" [options]="prioridades" [error]="
+                form.controls.prioridade.touched && form.controls.prioridade.invalid
+                  ? 'Selecione uma prioridade.'
+                  : ''
+              " />
+
+          <app-select label="Escopo" id="escopo" formControlName="escopo" [options]="escopos" [error]="
+                form.controls.escopo.touched && form.controls.escopo.invalid
+                  ? 'Selecione o escopo.'
+                  : ''
+              " />
+
+        </div>
+
+      </section>
+
+
+      <!-- AÇÕES -->
+
+      <div class="form-actions">
+
+        <app-button type="button" variant="secondary" [fullWidth]="false" [disabled]="submitting" (click)="voltar()">
+          Cancelar
+        </app-button>
+
+
+        <app-button type="submit" [fullWidth]="false" [disabled]="form.invalid" [loading]="submitting">
+          @if (submitting) {
+          Abrindo chamado...
+          } @else {
+          Abrir chamado
+          }
+        </app-button>
+
+      </div>
+
+    </form>
+
+  </app-card>
+
+  }
+
+</div>

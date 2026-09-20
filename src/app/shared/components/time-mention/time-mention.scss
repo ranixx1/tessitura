@@ -1,0 +1,224 @@
+.team-mention-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #101828;
+  }
+
+  p {
+    margin: 0;
+    color: #667085;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.team-mention-input {
+  position: relative;
+}
+
+.mention-input {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 14px;
+
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #101828;
+  font-size: 14px;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #98a2b3;
+  }
+
+  &:focus {
+    border-color: #1570ef;
+
+    box-shadow:
+      0 0 0 4px rgba(21, 112, 239, 0.12);
+  }
+}
+
+.mention-dropdown {
+  position: absolute;
+
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+
+  z-index: 20;
+
+  max-height: 220px;
+
+  overflow-y: auto;
+
+  padding: 6px;
+
+  background: #ffffff;
+
+  border: 1px solid #eaecf0;
+  border-radius: 10px;
+
+  box-shadow:
+    0 8px 24px rgba(16, 24, 40, 0.12);
+}
+
+.mention-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #344054;
+
+  font-size: 14px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease;
+
+  &:hover {
+    background: #f2f4f7;
+  }
+}
+
+.mention-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background: #eff8ff;
+
+  color: #1570ef;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mention-name {
+  font-weight: 500;
+}
+
+.selected-teams {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.team-tag {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 6px 10px;
+
+  border-radius: 16px;
+
+  background: #eff8ff;
+
+  border: 1px solid #b2ddff;
+
+  color: #175cd3;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #175cd3;
+
+    font-size: 18px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover {
+      background: #dbeafe;
+      color: #101828;
+    }
+  }
+}
+
+.mention-loading {
+  padding: 12px 0;
+
+  color: #667085;
+
+  font-size: 14px;
+}
+
+.mention-error {
+  padding: 10px 12px;
+
+  border: 1px solid #fecdca;
+  border-radius: 8px;
+
+  background: #fef3f2;
+
+  color: #b42318;
+
+  font-size: 13px;
+}

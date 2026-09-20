@@ -1,0 +1,13 @@
+// ============================================
+// Tessitura Typography
+// ============================================
+// tokens live in _tokens.scss, this file only applies them
+
+@use './tokens' as *;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+}

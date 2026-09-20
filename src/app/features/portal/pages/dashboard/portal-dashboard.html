@@ -1,0 +1,93 @@
+<div class="portal-page">
+
+  <header class="portal-header">
+    <div>
+      <h1>Portais</h1>
+
+      <p>
+        Selecione um portal para visualizar os serviços disponíveis.
+      </p>
+    </div>
+  </header>
+
+  @if (loading) {
+
+    <div class="portal-loading">
+      <span class="loading-spinner"></span>
+      <span>Carregando portais...</span>
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="portal-error">
+      <h2>Não foi possível carregar os portais</h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        (click)="carregarPortais()"
+      >
+        Tentar novamente
+      </button>
+    </div>
+
+  } @else if (portals.length === 0) {
+
+    <div class="empty-state">
+
+      <h2>Nenhum portal disponível</h2>
+
+      <p>
+        Não existem portais cadastrados no momento.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <div class="portal-grid">
+
+      @for (portal of portals; track portal.id) {
+
+        <button
+          type="button"
+          class="portal-card"
+          (click)="abrirPortal(portal)"
+        >
+
+          <div class="portal-card-icon">
+            {{ portal.codigo }}
+          </div>
+
+          <div class="portal-card-content">
+
+            <h2>
+              {{ portal.nome }}
+            </h2>
+
+            @if (portal.descricao) {
+
+              <p>
+                {{ portal.descricao }}
+              </p>
+
+            }
+
+          </div>
+
+          <span class="portal-card-arrow">
+            →
+          </span>
+
+        </button>
+
+      }
+
+    </div>
+
+  }
+
+</div>

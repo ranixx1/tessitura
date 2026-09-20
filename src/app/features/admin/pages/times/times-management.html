@@ -1,0 +1,112 @@
+<div class="time-page">
+
+    <div class="time-header">
+        <div class="time-header-titles">
+            <h1>Gerenciamento de Times</h1>
+            <p>Organize os times e gerencie seus membros de forma centralizada.</p>
+        </div>
+    </div>
+
+    <app-alert *ngIf="errorMessage" type="error" [message]="errorMessage">
+    </app-alert>
+
+    <app-alert *ngIf="successMessage" type="success" [message]="successMessage">
+    </app-alert>
+
+    <div class="create-time-card">
+        <div class="create-time-header">
+            <h2>Criar novo time</h2>
+            <p>Adicione uma nova equipe informando o nome abaixo.</p>
+        </div>
+
+        <div class="create-time-form">
+            <input type="text" [(ngModel)]="novoNome" placeholder="Ex: Equipe de Desenvolvimento"
+                (keyup.enter)="criarTime()" />
+
+            <app-button (click)="criarTime()">
+                Criar time
+            </app-button>
+        </div>
+    </div>
+
+    <section *ngIf="loading">
+        <app-loading></app-loading>
+    </section>
+
+    <section class="times-section" *ngIf="!loading">
+        <h2 class="section-title">Times cadastrados</h2>
+
+        <div class="times-grid" *ngIf="times.length > 0">
+            <app-card *ngFor="let time of times" class="time-card" (click)="selecionarTime(time)">
+
+                <div class="time-card-header">
+                    <div class="time-info">
+                        <h3>{{ time.nome }}</h3>
+                        <span>{{ time.membros.length }} membro(s)</span>
+                    </div>
+
+                    <button type="button" class="delete-time" (click)="deletarTime(time); $event.stopPropagation()">
+                        Excluir
+                    </button>
+                </div>
+
+            </app-card>
+        </div>
+
+        <div class="empty-state" *ngIf="times.length === 0">
+            Nenhum time cadastrado no momento.
+        </div>
+    </section>
+
+    <div class="members-card" *ngIf="timeSelecionado">
+        <div class="members-header">
+            <h2>Membros do time: {{ timeSelecionado.nome }}</h2>
+            <span>{{ timeSelecionado.membros.length }} participante(s)</span>
+        </div>
+
+        <div class="add-member">
+            <select [(ngModel)]="usuarioSelecionado">
+                <option [ngValue]="null">Selecione um usuário para adicionar</option>
+                <option *ngFor="let usuario of usuarios" [ngValue]="usuario.id">
+                    {{ usuario.username }} — {{ usuario.email }}
+                </option>
+            </select>
+
+            <app-button (click)="adicionarMembro()">
+                Adicionar membro
+            </app-button>
+        </div>
+
+        <div class="membros-lista" *ngIf="timeSelecionado.membros.length > 0">
+
+            <div class="membro" *ngFor="let userId of timeSelecionado.membros">
+
+                <div class="membro-content">
+                    <div class="membro-avatar">
+                        {{ obterIniciais(obterUsuario(userId)?.username) }}
+                    </div>
+
+                    <div class="membro-info">
+                        <strong>
+                            {{ obterUsuario(userId)?.username || 'Usuário #' + userId }}
+                        </strong>
+                        <small>
+                            {{ obterUsuario(userId)?.email }}
+                        </small>
+                    </div>
+                </div>
+
+                <button type="button" class="remove-member" (click)="removerMembro(userId)">
+                    Remover
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="empty-state" *ngIf="timeSelecionado.membros.length === 0">
+            Este time ainda não possui membros associados.
+        </div>
+    </div>
+
+</div>
